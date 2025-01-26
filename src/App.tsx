@@ -1,17 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Router
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Products from './pages/Products';
+import ProductDetails from './pages/ProductDetails';
+import About from './pages/About';
+import Checkout from './pages/Checkout';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import Login from './pages/Login';
 
 function App() {
-
   return (
-    <>
-    <h1 className="text-8xl font-bold  underline">
-      Hello world!
-    </h1>
-      </>
-  )
+    <Router> {/* Wrap the entire app in Router */}
+      <Navbar /> {/* Place Navbar here so it appears on all pages */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/all-products" element={<Products />} />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
