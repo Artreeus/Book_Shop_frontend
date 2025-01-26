@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import FeaturedBook from '../components/FeaturedBook';
 import ProductCard from '../components/ProductCard';
+import Blog from '../components/Blog';
 
 interface CartItem {
   id: number;
@@ -18,6 +19,7 @@ const Home = () => {
       <Hero />
       <ProductCard cart={cart} setCart={setCart} />
       <FeaturedBook />
+      <Blog />
     </div>
   );
 };

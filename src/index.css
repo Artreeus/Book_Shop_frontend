@@ -25,6 +25,22 @@
       #fff 101.59%
     );
 }
+.hero3 {
+  background: linear-gradient(
+      79deg,
+      #ffe5e5 -2.75%,
+      #f5fffe 20.07%,
+      #fff 54.28%,
+      #fff 101.59%
+    ),
+    linear-gradient(
+      360deg,
+      #ffe5e5 -2.75%,
+      #f5fffe 20.07%,
+      #fff 54.28%,
+      #fff 101.59%
+    );
+}
 
 .hero2 {
   background: linear-gradient(
@@ -34,6 +50,13 @@
     #fff 54.28%,
     #fff 101.59%
   );
+}
+.hero3 {
+  background: linear-gradient(79deg, #FFE5E5 8.52%, #F5FFFE 68.88%, #FFF 101.74%);
+}
+
+.bg-indigo-600{
+  background-color: #393280;
 }
 
 .her0h1 {

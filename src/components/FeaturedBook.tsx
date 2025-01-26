@@ -26,7 +26,7 @@ const FeaturedBook = () => {
         </p>
         <p className="text-xl font-semibold text-red-500 mt-4">$45.00</p>
 
-        <button className="mt-6 w-full md:w-auto bg-[#393280] text-white hover:bg-transparent hover:text-black px-6 py-3 rounded-lg shadow-md">
+        <button className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700">
           View More →
         </button>
       </div>
