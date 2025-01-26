@@ -2,7 +2,7 @@ import React from "react";
 
 const FeaturedBook = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between hero2 px-5 py-16">
+    <div className="flex flex-col md:flex-row items-center justify-between hero2 px-5 py-16 my-6">
       {/* Left Side - Book Cover */}
       <div className="w-full md:w-1/2 flex justify-center">
         <img

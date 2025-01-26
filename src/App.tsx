@@ -9,7 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import { useState } from 'react';
-import ProductCard from './components/ProductCard';
+import Footer from './components/Footer';
 
 interface CartItem {
   id: number;
@@ -33,6 +33,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
