@@ -8,3 +8,40 @@
   box-sizing: border-box;
   font-family: "Inter", serif;
 }
+
+.hero {
+  background: linear-gradient(
+    79deg,
+    #ffe5e5 -2.75%,
+    #f5fffe 20.07%,
+    #fff 54.28%,
+    #fff 101.59%
+  ),linear-gradient(
+    360deg,
+    #ffe5e5 -2.75%,
+    #f5fffe 20.07%,
+    #fff 54.28%,
+    #fff 101.59%
+  );
+}
+
+.her0h1 {
+  color: #393280;
+  font-family: Inter;
+  font-size: 45px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 145%; /* 87px */
+  letter-spacing: -1.2px;
+  text-transform: capitalize;
+}
+
+.herop {
+  color: rgba(57, 50, 128, 0.8);
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 180%; /* 39.6px */
+  letter-spacing: 0.88px;
+}

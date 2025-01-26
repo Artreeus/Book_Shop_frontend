@@ -1,18 +1,14 @@
 import React from 'react';
+import Hero from '../components/Hero';
 
 const Home = () => {
   return (
-    <div className="container mx-auto ">
-      <div className='flex justify-between items-center '> 
-        <div>
-          <h1>Home</h1>
-          <p>Home page content</p>
-          <button>Click me</button>
-        </div>
-        <div><img src="hero.png" alt="" /></div>
-      </div>
+    <div className=" ">
+     <Hero/>
     </div>
   );
 };
 
 export default Home;
+
+
