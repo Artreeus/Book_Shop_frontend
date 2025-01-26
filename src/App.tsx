@@ -8,11 +8,21 @@ import Checkout from './pages/Checkout';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
+import { useState } from 'react';
+import ProductCard from './components/ProductCard';
+
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
 
 function App() {
+  const [cart, setCart] = useState<CartItem[]>([]);
   return (
     <Router> {/* Wrap the entire app in Router */}
-      <Navbar /> {/* Place Navbar here so it appears on all pages */}
+       <Navbar cart={cart} /> {/* Place Navbar here so it appears on all pages */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/all-products" element={<Products />} />

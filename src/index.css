@@ -11,13 +11,24 @@
 
 .hero {
   background: linear-gradient(
-    79deg,
-    #ffe5e5 -2.75%,
-    #f5fffe 20.07%,
-    #fff 54.28%,
-    #fff 101.59%
-  ),linear-gradient(
-    360deg,
+      79deg,
+      #ffe5e5 -2.75%,
+      #f5fffe 20.07%,
+      #fff 54.28%,
+      #fff 101.59%
+    ),
+    linear-gradient(
+      360deg,
+      #ffe5e5 -2.75%,
+      #f5fffe 20.07%,
+      #fff 54.28%,
+      #fff 101.59%
+    );
+}
+
+.hero2 {
+  background: linear-gradient(
+    256deg,
     #ffe5e5 -2.75%,
     #f5fffe 20.07%,
     #fff 54.28%,
