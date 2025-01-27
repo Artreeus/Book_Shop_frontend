@@ -23,13 +23,13 @@ const Navbar = ({ cart }: NavbarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md  w-full top-0 z-50 p-4">
+    <nav className="bg-white shadow-md  w-full top-0 z-50 p-4 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="bLogo.png" alt="Logo" className="w-8 h-8 sm:w-10 sm:h-10" />
+              <img src="bLogo.png" alt="Logo"  />
               <span className="text-lg sm:text-2xl font-bold text-gray-900">BookShopBD</span>
             </Link>
           </div>
@@ -64,7 +64,7 @@ const Navbar = ({ cart }: NavbarProps) => {
                 </>
               ) : (
                 <>
-                  <Link to="/login" className="text-gray-700 hover:text-orange-600 px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                  <Link to="/login" className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors">
                     Login
                   </Link>
                   <Link to="/register" className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors">

@@ -74,12 +74,12 @@ const ProductCard: React.FC = () => {
                   </div>
                   <div className="mt-4 text-center">
                     <h2 className="text-lg text-[#393280] font-semibold mt-2">{book.title}</h2>
-                    <p className="text-gray-600">${book.price.toFixed(2)}</p>
+                    <p className="text-orange-600 font-bold py-2">${book.price.toFixed(2)}</p>
                     
                     {/* Render random review stars with review number */}
                     <div className="flex justify-center items-center mt-2">
                       {[...Array(randomReviews)].map((_, index) => (
-                        <Star key={index} className="text-yellow-500 w-5 h-5" />
+                        <Star key={index} className="text-orange-500 w-5 h-5" />
                       ))}
                       <span className="ml-2 text-sm text-gray-600">{randomReviews} Reviews</span>
                     </div>

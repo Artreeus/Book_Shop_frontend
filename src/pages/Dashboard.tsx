@@ -1,10 +1,11 @@
+import React, { useState } from 'react';
 import { Link, Route, Routes, Navigate } from 'react-router-dom';
 import { BookForm } from '../components/BookForm';
 import { BookList } from '../components/BookList';
 import { UserManagement } from '../components/UserManagment';
 import { UserDashboard } from '../components/UserDashborad';
+import { Menu, X, BookOpen, Users, Settings, Home, List, Key } from 'lucide-react';
 
-// Helper function to get the user role from localStorage
 const getUserRole = () => {
   const storedData = localStorage.getItem('persist:root');
   if (storedData) {
@@ -15,61 +16,169 @@ const getUserRole = () => {
   return null;
 };
 
+const Sidebar = ({ role, isOpen, toggleSidebar }) => (
+  <div
+    className={`${
+      isOpen ? 'translate-x-0' : '-translate-x-full'
+    } transform fixed lg:relative lg:translate-x-0 z-30 transition-transform duration-300 ease-in-out h-screen bg-gray-900 text-white lg:w-64 w-64 flex flex-col shadow-xl`}
+  >
+    {/* Dashboard Header */}
+    <div className="flex items-center justify-between p-4 border-b border-gray-800">
+      <h2 className="text-xl font-bold text-indigo-400">Dashboard</h2>
+      <button
+        onClick={toggleSidebar}
+        className="lg:hidden text-gray-300 hover:text-white"
+      >
+        <X className="h-6 w-6" />
+      </button>
+    </div>
 
-
-
-const Sidebar = ({ role  }) => (
-  <div className="h-screen w-64 bg-gray-800 text-white flex flex-col">
-    <h2 className="text-xl font-bold p-4 border-b border-gray-700">Dashboard</h2>
-    <nav className="flex-1">
-      <ul className="space-y-2 p-4">
-        {role === 'admin' && (
-          <>
-            <li><Link to="/dashboard/book-form" className="block p-2 rounded hover:bg-gray-700">Book Form</Link></li>
-            <li><Link to="/dashboard/book-list" className="block p-2 rounded hover:bg-gray-700">Book List</Link></li>
-            <li><Link to="/dashboard/user-management" className="block p-2 rounded hover:bg-gray-700">User Management</Link></li>
-            <li><Link to="/dashboard/admin-route2" className="block p-2 rounded hover:bg-gray-700">Admin Route 2</Link></li>
-          </>
-        )}
-        {role === 'user' && (
-          <>
-            <li><Link to="/dashboard/user-pass" className="block p-2 rounded hover:bg-gray-700">User Dashboard (Update Password)</Link></li>
-            <li><Link to="/dashboard/user-route2" className="block p-2 rounded hover:bg-gray-700">User Route 2</Link></li>
-            <li><Link to="/dashboard/user-route3" className="block p-2 rounded hover:bg-gray-700">User Route 3</Link></li>
-          </>
-        )}
-      </ul>
+    {/* Navigation */}
+    <nav className="flex-1 overflow-y-auto">
+      <div className="p-4">
+        <div className="mb-4">
+          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            Menu
+          </div>
+          <ul className="mt-4 space-y-2">
+            {role === 'admin' && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/book-form"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
+                  >
+                    <BookOpen className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
+                    <span>Book Form</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/book-list"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
+                  >
+                    <List className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
+                    <span>Book List</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/user-management"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
+                  >
+                    <Users className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
+                    <span>User Management</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/admin-route2"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
+                  >
+                    <Settings className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
+                    <span>Admin Settings</span>
+                  </Link>
+                </li>
+              </>
+            )}
+            {role === 'user' && (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/user-pass"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
+                  >
+                    <Key className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
+                    <span>Update Password</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/user-route2"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
+                  >
+                    <Home className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
+                    <span>My Profile</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/user-route3"
+                    className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
+                  >
+                    <Settings className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
+                    <span>Settings</span>
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
     </nav>
   </div>
 );
 
 const Dashboard = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const role = getUserRole();
 
   if (!role) {
-    return <Navigate to="/login" replace />; // Redirect to login if no role is found
+    return <Navigate to="/login" replace />;
   }
 
-  return (
-<div className="flex">
-      <Sidebar role={role} />
-      <div className="flex-1 bg-gray-100 p-6">
-        <Routes>
-          <Route path="book-form" element={<BookForm />} />
-          <Route path="book-list" element={<BookList />} />
-          <Route path="user-management" element={<UserManagement />} />
-          <Route
-            path="*"
-            element={
-              <div className="text-center text-4xl mt-10">
-                <p>Welcome to The Dashboard {role} </p>
-              </div>
-            }
-          />
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
-          {/* user routes  */}
-            <Route path="user-pass" element={<UserDashboard />} />
-        </Routes>
+  return (
+    <div className="min-h-screen bg-gray-100">
+      {/* Mobile Header */}
+      <div className="lg:hidden bg-gray-900 text-white p-4 flex items-center justify-between">
+        <h1 className="text-xl font-bold">Dashboard</h1>
+        <button
+          onClick={toggleSidebar}
+          className="text-gray-300 hover:text-white focus:outline-none"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+      </div>
+
+      {/* Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+
+      <div className="flex">
+        <Sidebar role={role} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        
+        {/* Main Content */}
+        <div className="flex-1 lg:ml-64">
+          <div className="p-6">
+            <Routes>
+              <Route path="book-form" element={<BookForm />} />
+              <Route path="book-list" element={<BookList />} />
+              <Route path="user-management" element={<UserManagement />} />
+              <Route path="user-pass" element={<UserDashboard />} />
+              <Route
+                path="*"
+                element={
+                  <div className="bg-white rounded-lg shadow-md p-6">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-4">
+                      Welcome to the Dashboard
+                    </h1>
+                    <p className="text-gray-600">
+                      You are logged in as: <span className="font-semibold text-indigo-600">{role}</span>
+                    </p>
+                  </div>
+                }
+              />
+            </Routes>
+          </div>
+        </div>
       </div>
     </div>
   );

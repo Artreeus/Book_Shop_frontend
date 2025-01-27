@@ -121,7 +121,7 @@ export function BookList() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="animate-spin rounded-full border-t-4 border-indigo-600 w-16 h-16"></div>
       </div>
     );
   }
@@ -230,7 +230,7 @@ export function BookList() {
                 <>
                   <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
                   <p className="text-gray-600 mb-1">By {book.author}</p>
-                  <p className="text-blue-600 font-semibold mb-2">${book.price.toFixed(2)}</p>
+                  <p className="text-indigo-600 font-semibold mb-2">${book.price.toFixed(2)}</p>
                   <p className="text-sm text-gray-500 mb-2">{book.category}</p>
                   <p className="text-sm text-gray-600 mb-2">{book.description}</p>
                   <p className="text-sm text-gray-600">Stock: {book.quantity}</p>
@@ -238,7 +238,7 @@ export function BookList() {
                   <div className="flex justify-end gap-2 mt-4">
                     <button
                       onClick={() => handleEdit(book)}
-                      className="p-2 text-blue-600 hover:text-blue-800"
+                      className="p-2 text-indigo-600 hover:text-indigo-800"
                     >
                       <Pencil className="w-5 h-5" />
                     </button>

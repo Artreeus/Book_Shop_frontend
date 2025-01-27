@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { useState } from 'react';
 import Footer from './components/Footer';
+import { ToastContainer } from 'react-toastify';
 
 interface CartItem {
   id: number;

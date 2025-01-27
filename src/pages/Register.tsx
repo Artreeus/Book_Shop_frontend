@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    name: "", 
-    role: "user", // optional, defaulting to "user"
+    name: "",
+    role: "user", // default role
   });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+
   const navigate = useNavigate();
 
   // Handle input changes
@@ -24,8 +25,6 @@ const Register = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
 
     try {
       const response = await axios.post(
@@ -33,31 +32,35 @@ const Register = () => {
         formData
       );
       if (response.data.success) {
-        setSuccess("Registration successful! Redirecting to login...");
+        toast.success("Registration successful! Redirecting to login...", {
+          position: "top-right",
+        });
         setTimeout(() => {
           navigate("/login"); // Redirect to login page after successful registration
         }, 2000);
-        console.log(response.data);
       } else {
-        setError("Registration failed. Please try again.");
+        toast.error("Registration failed. Please try again.", {
+          position: "top-right",
+        });
       }
-    } catch (err :any ) {
-      setError(
-        err.response?.data?.message || "Something went wrong. Please try again."
+    } catch (err: any) {
+      toast.error(
+        err.response?.data?.message || "Something went wrong. Please try again.",
+        {
+          position: "top-right",
+        }
       );
     }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center heo hero1 hero2">
+    <div className="min-h-screen flex justify-center items-center hero hero1 hero2">
       <div className="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
         <h2 className="text-4xl font-bold text-center mb-6 text-[#393280]">Register</h2>
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-        {success && <p className="text-green-500 text-sm mb-4">{success}</p>}
         <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+          <div className="mb-4">
             <label
-              htmlFor="Text"
+              htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
               Name
@@ -108,22 +111,19 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md  transition"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md transition"
           >
             Register
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-500">
           Already have an account?{" "}
-          {/* <a
-            href="/login"
-            className=" text-[#393280] underline"
-          >
+          <Link to="/login" className="text-[#393280] underline">
             Login here
-            </a> */}
-            <Link to="/login" className=" text-[#393280] "> Login here</Link>
+          </Link>
         </p>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

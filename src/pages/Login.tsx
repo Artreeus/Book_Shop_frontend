@@ -3,6 +3,8 @@ import { useAppDispatch } from '../redux/hooks';
 import { setCredentials } from '../redux/features/auth/authSlice';
 import { useLoginMutation } from '../redux/features/auth/authApi';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,11 +19,15 @@ const Login = () => {
     try {
       const response = await login({ email, password }).unwrap();
       dispatch(setCredentials(response.data));
-      alert('Login successful');
-      navigate('/'); 
-    } catch (err) {
+      toast.success('Login successful!'); // Success toast
+      setTimeout(() => navigate('/'), 1500);
+    } catch (err: any) {
+      if (err?.status === 401) {
+        toast.error('Invalid login credentials. Please try again.'); // Specific error
+      } else {
+        toast.error('Failed to login. Please try later.'); // General error
+      }
       console.error(err);
-      alert('Failed to login');
     }
   };
 
@@ -37,7 +43,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 mt-2 border border-[#393280] rounded-lg focus:outline-none focus:ring "
+              className="w-full px-4 py-2 mt-2 border border-[#393280] rounded-lg focus:outline-none focus:ring"
               placeholder="Enter your email"
             />
           </div>
@@ -48,7 +54,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 mt-2 border border-[#393280] rounded-lg focus:outline-none focus:ring "
+              className="w-full px-4 py-2 mt-2 border border-[#393280] rounded-lg focus:outline-none focus:ring"
               placeholder="Enter your password"
             />
           </div>
@@ -61,6 +67,7 @@ const Login = () => {
           </button>
         </form>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
