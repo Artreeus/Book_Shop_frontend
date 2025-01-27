@@ -10,6 +10,7 @@ const Footer = () => {
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <img src="bLogo.png" alt="" />
+              {/* <img src="bLogo.png" alt="" /> */}
             </div>
             <p className="text-gray-600 max-w-sm">
              BookSHopBd is a Bangladeshi Book shop Where Users can Buy Books and Ebooks. <br /> We have a wide range of books and ebooks.

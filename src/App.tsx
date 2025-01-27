@@ -24,7 +24,7 @@ function FooterWrapper() {
   const location = useLocation(); // Get current location
 
   // Check if the current path is Login or Register page
-  const showFooter = !['/login', '/register'].includes(location.pathname);
+  const showFooter = !['/login', '/register' ,"/dashboard", "/dashboard/*"].includes(location.pathname);
 
   return showFooter ? <Footer /> : null; // Render Footer conditionally
 }
@@ -41,7 +41,7 @@ function App() {
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
