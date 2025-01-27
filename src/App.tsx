@@ -1,16 +1,16 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Router
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'; // Import Router and useLocation
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
-import About from './pages/AboutUs';
+import AboutUs from './pages/AboutUs';
 import Checkout from './pages/Checkout';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import { useState } from 'react';
 import Footer from './components/Footer';
-import AboutUs from './pages/AboutUs';
 
 interface CartItem {
   id: number;
@@ -19,11 +19,22 @@ interface CartItem {
   image: string;
 }
 
+// Create a separate component to handle conditional footer rendering
+function FooterWrapper() {
+  const location = useLocation(); // Get current location
+
+  // Check if the current path is Login or Register page
+  const showFooter = !['/login', '/register'].includes(location.pathname);
+
+  return showFooter ? <Footer /> : null; // Render Footer conditionally
+}
+
 function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
+
   return (
-    <Router> {/* Wrap the entire app in Router */}
-       <Navbar cart={cart} /> {/* Place Navbar here so it appears on all pages */}
+    <Router>
+      <Navbar cart={cart} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/all-products" element={<Products />} />
@@ -33,8 +44,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
-      <Footer />
+      <FooterWrapper /> {/* Render FooterWrapper here */}
     </Router>
   );
 }

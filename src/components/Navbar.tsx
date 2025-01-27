@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Logout from "./Logout";
+import { RootState } from "../redux/store"; // Adjust the import based on your store setup
 
 interface CartItem {
   id: number;
@@ -13,14 +16,10 @@ interface NavbarProps {
 }
 
 const Navbar = ({ cart }: NavbarProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleLogin = () => setIsLoggedIn(!isLoggedIn);
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-
+  const isLoggedIn = useSelector((state: RootState) => !!state.auth.user); // Assuming user is stored in auth state
   const totalItems = cart.length;
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="shadow-lg">
@@ -35,46 +34,120 @@ const Navbar = ({ cart }: NavbarProps) => {
 
         {/* Hamburger for small screens */}
         <div className="lg:hidden">
-          <button onClick={toggleMobileMenu} className="text-2xl">
-            {isMobileMenuOpen ? "×" : "☰"}
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-2xl">
+            ☰
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+  <div
+    className={`absolute top-16 left-0 right-0 bg-white shadow-lg p-4 lg:hidden text-center flex flex-col space-y-4 transition-transform duration-100 ease-in-out transform ${
+      isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
+    }`}
+  >
+    <ul className="space-y-4">
+      <li>
+        <Link to="/" className="hover:text-[#ED553B] transition">
+          Home
+        </Link>
+      </li>
+      <li>
+        <Link to="/all-products" className="hover:text-[#ED553B] transition">
+          All Products
+        </Link>
+      </li>
+      <li>
+        <Link to="/about" className="hover:text-[#ED553B] transition">
+          About
+        </Link>
+      </li>
+      {isLoggedIn ? (
+        <>
+          <li>
+            <Link to="/checkout" className="hover:text-[#ED553B] transition">
+              Checkout
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard" className="hover:text-[#ED553B] transition">
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+              <Logout />
+            </button>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login" className="hover:text-[#ED553B] transition">
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link to="/register" className="hover:text-[#ED553B] transition">
+              Register
+            </Link>
+          </li>
+        </>
+      )}
+    </ul>
+  </div>
+)}
+
 
         {/* Desktop Navbar Items */}
         <div className={`hidden lg:flex lg:space-x-6 items-center`}>
           <ul className="flex items-center space-x-8">
             <li>
-              <Link to="/" className="hover:text-[#ED553B] transition">Home</Link>
+              <Link to="/" className="hover:text-[#ED553B] transition">
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/all-products" className="hover:text-[#ED553B] transition">All Products</Link>
+              <Link to="/all-products" className="hover:text-[#ED553B] transition">
+                All Products
+              </Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-[#ED553B] transition">About</Link>
+              <Link to="/about" className="hover:text-[#ED553B] transition">
+                About
+              </Link>
             </li>
-            {isLoggedIn && (
+            {isLoggedIn ? (
               <>
                 <li>
-                  <Link to="/checkout" className="hover:text-[#ED553B] transition">Checkout</Link>
+                  <Link to="/checkout" className="hover:text-[#ED553B] transition">
+                    Checkout
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/dashboard" className="hover:text-[#ED553B] transition">Dashboard</Link>
+                  <Link to="/dashboard" className="hover:text-[#ED553B] transition">
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+                    <Logout />
+                  </button>
                 </li>
               </>
-            )}
-            {!isLoggedIn ? (
-              <li>
-                <Link to="/login" onClick={toggleLogin} className="hover:text-[#ED553B] transition">Login</Link>
-              </li>
             ) : (
-              <li>
-                <button
-                  onClick={toggleLogin}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
-                >
-                  Logout
-                </button>
-              </li>
+              <>
+                <li>
+                  <Link to="/login" className="hover:text-[#ED553B] transition">
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/register" className="hover:text-[#ED553B] transition">
+                    Register
+                  </Link>
+                </li>
+              </>
             )}
           </ul>
         </div>
@@ -82,7 +155,11 @@ const Navbar = ({ cart }: NavbarProps) => {
         {/* Cart Dropdown */}
         <div className="flex items-center space-x-6 py-2 ps-2">
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle relative">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle relative"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 text-black"
@@ -110,7 +187,10 @@ const Navbar = ({ cart }: NavbarProps) => {
                   <>
                     <ul>
                       {cart.map((item) => (
-                        <li key={item.id} className="flex justify-between items-center border-b py-2">
+                        <li
+                          key={item.id}
+                          className="flex justify-between items-center border-b py-2"
+                        >
                           <div>
                             <p className="font-semibold">{item.name}</p>
                             <p>${item.price.toFixed(2)}</p>
@@ -123,7 +203,9 @@ const Navbar = ({ cart }: NavbarProps) => {
                         </li>
                       ))}
                     </ul>
-                    <p className="mt-2 font-bold">Total: ${totalPrice.toFixed(2)}</p>
+                    <p className="mt-2 font-bold">
+                      Total: ${totalPrice.toFixed(2)}
+                    </p>
                     <div className="card-actions mt-4">
                       <Link to="/cart" className="btn btn-black btn-block">
                         View Cart
@@ -137,49 +219,6 @@ const Navbar = ({ cart }: NavbarProps) => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Mobile Menu with Transition */}
-      <div
-        className={`lg:hidden mt-4 transform transition-all duration-700 ease-in-out ${
-          isMobileMenuOpen ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
-        } overflow-hidden`}
-      >
-        <ul className="flex flex-col items-center space-y-4">
-          <li>
-            <Link to="/" className="hover:text-[#ED553B] transition">Home</Link>
-          </li>
-          <li>
-            <Link to="/all-products" className="hover:text-[#ED553B] transition">All Products</Link>
-          </li>
-          <li>
-            <Link to="/about" className="hover:text-[#ED553B] transition">About</Link>
-          </li>
-          {isLoggedIn && (
-            <>
-              <li>
-                <Link to="/checkout" className="hover:text-[#ED553B] transition">Checkout</Link>
-              </li>
-              <li>
-                <Link to="/dashboard" className="hover:text-[#ED553B] transition">Dashboard</Link>
-              </li>
-            </>
-          )}
-          {!isLoggedIn ? (
-            <li>
-              <Link to="/login" onClick={toggleLogin} className="hover:text-[#ED553B] transition ">Login</Link>
-            </li>
-          ) : (
-            <li>
-              <button
-                onClick={toggleLogin}
-                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
-              >
-                Logout
-              </button>
-            </li>
-          )}
-        </ul>
       </div>
     </div>
   );
