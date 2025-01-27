@@ -8,8 +8,8 @@ function Blog() {
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <BookOpen className="w-8 h-8 text-indigo-600" />
-          <h1 className="text-4xl font-bold text-gray-900">Chapter & Verse</h1>
+          <BookOpen className="w-12 h-16 text-[#393280]" />
+          <h1 className="text-[#393280] text-5xl py-6">Chapter & Verse </h1>
         </div>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
           Discover the latest from our bookshop, where every page turns into an adventure and every story finds its reader.

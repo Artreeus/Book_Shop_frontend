@@ -1,3 +1,4 @@
+import { BookOpen } from "lucide-react";
 import React from "react";
 
 const FeaturedBook = () => {
@@ -14,7 +15,7 @@ const FeaturedBook = () => {
 
       {/* Right Side - Book Details */}
       <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-8 text-center md:text-left space-y-4">
-        <h1 className="text-[#393280] text-5xl py-6">Our Featured Book </h1>
+        <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">Our Featured Book <BookOpen className="w-12 h-16 text-[#393280]" /> </h1>
         <p className="text-sm text-[#393280] uppercase font-medium">
           By Timbur Hood
         </p>
