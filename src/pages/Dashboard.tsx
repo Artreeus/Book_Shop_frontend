@@ -2,6 +2,7 @@ import { Link, Route, Routes, Navigate } from 'react-router-dom';
 import { BookForm } from '../components/BookForm';
 import { BookList } from '../components/BookList';
 import { UserManagement } from '../components/UserManagment';
+import { UserDashboard } from '../components/UserDashborad';
 
 // Helper function to get the user role from localStorage
 const getUserRole = () => {
@@ -28,12 +29,11 @@ const Sidebar = ({ role  }) => (
             <li><Link to="/dashboard/book-list" className="block p-2 rounded hover:bg-gray-700">Book List</Link></li>
             <li><Link to="/dashboard/user-management" className="block p-2 rounded hover:bg-gray-700">User Management</Link></li>
             <li><Link to="/dashboard/admin-route2" className="block p-2 rounded hover:bg-gray-700">Admin Route 2</Link></li>
-            <li><Link to="/dashboard/admin-route3" className="block p-2 rounded hover:bg-gray-700">Admin Route 3</Link></li>
           </>
         )}
         {role === 'user' && (
           <>
-            <li><Link to="/dashboard/user-route1" className="block p-2 rounded hover:bg-gray-700">User Route 1</Link></li>
+            <li><Link to="/dashboard/user-pass" className="block p-2 rounded hover:bg-gray-700">User Dashboard (Update Password)</Link></li>
             <li><Link to="/dashboard/user-route2" className="block p-2 rounded hover:bg-gray-700">User Route 2</Link></li>
             <li><Link to="/dashboard/user-route3" className="block p-2 rounded hover:bg-gray-700">User Route 3</Link></li>
           </>
@@ -62,10 +62,13 @@ const Dashboard = () => {
             path="*"
             element={
               <div className="text-center text-4xl mt-10">
-                <p>Welcome to The Dashboard {role}</p>
+                <p>Welcome to The Dashboard {role} </p>
               </div>
             }
           />
+
+          {/* user routes  */}
+            <Route path="user-pass" element={<UserDashboard />} />
         </Routes>
       </div>
     </div>

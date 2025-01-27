@@ -85,7 +85,7 @@ export function BookForm() {
   return (
     <div className="max-w-2xl mx-auto p-6">
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
+      <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4"><h1/>
           <BookPlus className="w-8 h-8" />
           Add New Book
         </h1>

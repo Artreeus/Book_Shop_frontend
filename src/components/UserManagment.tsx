@@ -101,10 +101,10 @@ export function UserManagement() {
   return (
     <div className="container mx-auto p-6">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold flex items-center gap-2">
+      <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
           <Users className="w-8 h-8" />
           User Management
-        </h2>
+        </h1>
         <p className="text-gray-600 mt-2">
           Manage user accounts and their access status
         </p>

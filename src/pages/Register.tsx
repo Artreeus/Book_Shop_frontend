@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Register = () => {
@@ -49,9 +49,9 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-screen flex justify-center items-center heo hero1 hero2">
       <div className="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+        <h2 className="text-4xl font-bold text-center mb-6 text-[#393280]">Register</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {success && <p className="text-green-500 text-sm mb-4">{success}</p>}
         <form onSubmit={handleSubmit}>
@@ -108,19 +108,20 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md  transition"
           >
             Register
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-500">
           Already have an account?{" "}
-          <a
+          {/* <a
             href="/login"
-            className="text-blue-500 hover:text-blue-600 underline"
+            className=" text-[#393280] underline"
           >
             Login here
-          </a>
+            </a> */}
+            <Link to="/login" className=" text-[#393280] "> Login here</Link>
         </p>
       </div>
     </div>

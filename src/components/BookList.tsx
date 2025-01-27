@@ -128,7 +128,7 @@ export function BookList() {
 
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">Book Management</h2>
+      <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">Book Management</h1>
       
       {error && (
         <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">

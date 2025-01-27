@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Logout from "./Logout";
-import { RootState } from "../redux/store"; // Adjust the import based on your store setup
+import { Menu, X, ShoppingCart } from "lucide-react";
+import { RootState } from "../redux/store";
 
 interface CartItem {
   id: number;
@@ -16,211 +17,191 @@ interface NavbarProps {
 }
 
 const Navbar = ({ cart }: NavbarProps) => {
-  const isLoggedIn = useSelector((state: RootState) => !!state.auth.user); // Assuming user is stored in auth state
+  const isLoggedIn = useSelector((state: RootState) => !!state.auth.user);
   const totalItems = cart.length;
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="shadow-lg">
-      <div className="navbar container mx-auto pt-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex-1">
-          <Link className="flex items-center space-x-2" to="/">
-            <img src="bLogo.png" alt="Logo" className="w-10 h-10" />
-            <span className="text-2xl font-semibold">BookShopBD</span>
-          </Link>
-        </div>
-
-        {/* Hamburger for small screens */}
-        <div className="lg:hidden">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-2xl">
-            ☰
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-  <div
-    className={`absolute top-16 left-0 right-0 bg-white shadow-lg p-4 lg:hidden text-center flex flex-col space-y-4 transition-transform duration-100 ease-in-out transform ${
-      isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
-    }`}
-  >
-    <ul className="space-y-4">
-      <li>
-        <Link to="/" className="hover:text-[#ED553B] transition">
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link to="/all-products" className="hover:text-[#ED553B] transition">
-          All Products
-        </Link>
-      </li>
-      <li>
-        <Link to="/about" className="hover:text-[#ED553B] transition">
-          About
-        </Link>
-      </li>
-      {isLoggedIn ? (
-        <>
-          <li>
-            <Link to="/checkout" className="hover:text-[#ED553B] transition">
-              Checkout
+    <nav className="bg-white shadow-md  w-full top-0 z-50 p-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          {/* Logo Section */}
+          <div className="flex-shrink-0 flex items-center">
+            <Link to="/" className="flex items-center space-x-2">
+              <img src="bLogo.png" alt="Logo" className="w-8 h-8 sm:w-10 sm:h-10" />
+              <span className="text-lg sm:text-2xl font-bold text-gray-900">BookShopBD</span>
             </Link>
-          </li>
-          <li>
-            <Link to="/dashboard" className="hover:text-[#ED553B] transition">
-              Dashboard
-            </Link>
-          </li>
-          <li>
-            <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
-              <Logout />
-            </button>
-          </li>
-        </>
-      ) : (
-        <>
-          <li>
-            <Link to="/login" className="hover:text-[#ED553B] transition">
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link to="/register" className="hover:text-[#ED553B] transition">
-              Register
-            </Link>
-          </li>
-        </>
-      )}
-    </ul>
-  </div>
-)}
+          </div>
 
-
-        {/* Desktop Navbar Items */}
-        <div className={`hidden lg:flex lg:space-x-6 items-center`}>
-          <ul className="flex items-center space-x-8">
-            <li>
-              <Link to="/" className="hover:text-[#ED553B] transition">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-8">
+            <div className="flex space-x-6">
+              <Link to="/" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 Home
               </Link>
-            </li>
-            <li>
-              <Link to="/all-products" className="hover:text-[#ED553B] transition">
+              <Link to="/all-products" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 All Products
               </Link>
-            </li>
-            <li>
-              <Link to="/about" className="hover:text-[#ED553B] transition">
+              <Link to="/about" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                 About
               </Link>
-            </li>
-            {isLoggedIn ? (
-              <>
-                <li>
-                  <Link to="/checkout" className="hover:text-[#ED553B] transition">
+            </div>
+
+            {/* Auth Navigation */}
+            <div className="flex items-center space-x-4">
+              {isLoggedIn ? (
+                <>
+                  <Link to="/checkout" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Checkout
                   </Link>
-                </li>
-                <li>
-                  <Link to="/dashboard" className="hover:text-[#ED553B] transition">
+                  <Link to="/dashboard" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Dashboard
                   </Link>
-                </li>
-                <li>
-                  <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+                  <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
                     <Logout />
                   </button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Link to="/login" className="hover:text-[#ED553B] transition">
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="text-gray-700 hover:text-orange-600 px-4 py-2 rounded-md text-sm font-medium transition-colors">
                     Login
                   </Link>
-                </li>
-                <li>
-                  <Link to="/register" className="hover:text-[#ED553B] transition">
+                  <Link to="/register" className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors">
                     Register
                   </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
-
-        {/* Cart Dropdown */}
-        <div className="flex items-center space-x-6 py-2 ps-2">
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle relative"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-black"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-              <span className="absolute top-0 right-0 bg-white text-black text-xs font-semibold rounded-full px-2 py-1 transform translate-x-1 translate-y-1">
-                {totalItems}
-              </span>
+                </>
+              )}
             </div>
-            <div
-              tabIndex={0}
-              className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-72 shadow-lg rounded-lg"
-            >
-              <div className="card-body">
-                {cart.length > 0 ? (
-                  <>
-                    <ul>
-                      {cart.map((item) => (
-                        <li
-                          key={item.id}
-                          className="flex justify-between items-center border-b py-2"
-                        >
-                          <div>
-                            <p className="font-semibold">{item.name}</p>
-                            <p>${item.price.toFixed(2)}</p>
-                          </div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-12 h-12 object-cover"
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="mt-2 font-bold">
-                      Total: ${totalPrice.toFixed(2)}
-                    </p>
-                    <div className="card-actions mt-4">
-                      <Link to="/cart" className="btn btn-black btn-block">
-                        View Cart
-                      </Link>
-                    </div>
-                  </>
-                ) : (
-                  <p className="text-center text-gray-500">Your cart is empty.</p>
+
+            {/* Cart Dropdown */}
+            <div className="relative group">
+              <button className="p-2 rounded-full hover:bg-gray-100 transition-colors relative">
+                <ShoppingCart className="h-6 w-6 text-gray-700" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-orange-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {totalItems}
+                  </span>
                 )}
+              </button>
+
+              {/* Cart Dropdown Content */}
+              <div className="hidden group-hover:block absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-100">
+                <div className="p-4">
+                  {cart.length > 0 ? (
+                    <>
+                      <div className="max-h-64 overflow-y-auto">
+                        {cart.map((item) => (
+                          <div key={item.id} className="flex items-center space-x-4 py-3 border-b border-gray-100">
+                            <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-md" />
+                            <div className="flex-1">
+                              <h3 className="text-sm font-medium text-gray-900">{item.name}</h3>
+                              <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4">
+                        <div className="flex justify-between font-medium text-gray-900">
+                          <span>Total</span>
+                          <span>${totalPrice.toFixed(2)}</span>
+                        </div>
+                        <Link
+                          to="/cart"
+                          className="mt-4 w-full bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors inline-block text-center"
+                        >
+                          View Cart
+                        </Link>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="text-center text-gray-500 py-4">Your cart is empty</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Mobile menu button */}
+          <div className="flex items-center lg:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6 transition-transform duration-200 ease-in-out" />
+              ) : (
+                <Menu className="h-6 w-6 transition-transform duration-200 ease-in-out" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Mobile menu with smooth animation */}
+      <div 
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
+          <Link
+            to="/"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+          >
+            Home
+          </Link>
+          <Link
+            to="/all-products"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+          >
+            All Products
+          </Link>
+          <Link
+            to="/about"
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+          >
+            About
+          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link
+                to="/checkout"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+              >
+                Checkout
+              </Link>
+              <Link
+                to="/dashboard"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+              >
+                Dashboard
+              </Link>
+              <div className="px-3 py-2">
+                <button className="w-full bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition-colors">
+                  <Logout />
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+              >
+                Register
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 
