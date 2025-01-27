@@ -186,10 +186,10 @@ export function BookList() {
                     className="w-full p-2 border rounded"
                   >
                     <option value="Fiction">Fiction</option>
-                    <option value="Non-Fiction">Non-Fiction</option>
+                    <option value="Religious">Religious</option>
                     <option value="Science">Science</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Business">Business</option>
+                    <option value="SelfDevelopment">SelfDevelopment</option>
+                    <option value="Poetry">Poetry</option>
                   </select>
                   <textarea
                     value={editingBook.description}

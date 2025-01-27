@@ -9,7 +9,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
-              <img src="bLogo.png" alt="" />
+              <img src="bLogo.png" alt="Logo" />
               {/* <img src="bLogo.png" alt="" /> */}
             </div>
             <p className="text-gray-600 max-w-sm">
