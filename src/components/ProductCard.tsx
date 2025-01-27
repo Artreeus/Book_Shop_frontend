@@ -1,54 +1,46 @@
 import { BookOpen, Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface CartItem {
-  id: number;
+  _id: string;
   title: string;
   price: number;
   image: string;
 }
 
-interface ProductCardProps {
-  cart: CartItem[];
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ cart, setCart }) => {
-  // State to store books fetched from API
+const ProductCard: React.FC = () => {
   const [books, setBooks] = useState<CartItem[]>([]);
-  // State to track loading
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate(); // For navigation
 
-  // Fetch books from API when the component mounts
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/books");
         const data = await response.json();
 
-        // Check if the response has a 'data' property that is an array
         if (data && Array.isArray(data.data)) {
-          setBooks(data.data); // Update state with the books array inside 'data'
+          setBooks(data.data);
         } else {
           console.error("API response does not contain a valid 'data' array:", data);
         }
       } catch (error) {
         console.error("Error fetching books:", error);
       } finally {
-        setLoading(false); // Once the fetch is done, set loading to false
+        setLoading(false);
       }
     };
 
     fetchBooks();
-  }, []); // Empty dependency array means this runs only once when the component mounts
+  }, []);
 
-  const handleAddToCart = (book: CartItem) => {
-    setCart((prevCart) => [...prevCart, book]);
-  };
-
-  // Function to generate random reviews between 1 and 5 stars
   const generateRandomReviews = () => {
     return Math.ceil(Math.random() * 5); // Random number between 1 and 5
+  };
+
+  const handleViewAll = () => {
+    navigate("/all-products"); // Navigate to the All Products Page
   };
 
   return (
@@ -63,18 +55,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ cart, setCart }) => {
           <div className="animate-spin rounded-full border-t-4 border-indigo-600 w-16 h-16"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {books.length === 0 ? (
-            <div className="col-span-3 text-center text-xl text-gray-600">
-              No books available.
-            </div>
-          ) : (
-            books.map((book) => {
+        <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {books.slice(0, 6).map((book) => {
               const randomReviews = generateRandomReviews(); // Generate random reviews for each book
 
               return (
                 <div
-                  key={book.id}
+                  key={book._id}
                   className="bg-white shadow-2xl rounded-lg p-4 hover:shadow-lg transition relative hover:scale-105"
                 >
                   <div>
@@ -93,19 +81,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ cart, setCart }) => {
                       {[...Array(randomReviews)].map((_, index) => (
                         <Star key={index} className="text-yellow-500 w-5 h-5" />
                       ))}
-                      <span className="ml-2 text-sm text-gray-600 font-bold">{randomReviews} Reviews</span>
+                      <span className="ml-2 text-sm text-gray-600">{randomReviews} Reviews</span>
                     </div>
-
-                    <button
-                      onClick={() => handleAddToCart(book)}
-                      className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700"
-                    >
-                      Add to Cart
-                    </button>
                   </div>
                 </div>
               );
-            })
+            })}
+          </div>
+
+          {/* "View All" Button */}
+          {books.length > 6 && (
+            <div className="text-center mt-8">
+              <button
+                onClick={handleViewAll}
+                className="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700"
+              >
+                View All Products
+              </button>
+            </div>
           )}
         </div>
       )}

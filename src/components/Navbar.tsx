@@ -24,7 +24,7 @@ const Navbar = ({ cart }: NavbarProps) => {
 
   return (
     <div className="shadow-lg">
-      <div className="navbar container mx-auto p-4 flex justify-between items-center">
+      <div className="navbar container mx-auto pt-4 flex justify-between items-center">
         {/* Logo */}
         <div className="flex-1">
           <Link className="flex items-center space-x-2" to="/">
@@ -167,7 +167,7 @@ const Navbar = ({ cart }: NavbarProps) => {
           )}
           {!isLoggedIn ? (
             <li>
-              <Link to="/login" onClick={toggleLogin} className="hover:text-[#ED553B] transition">Login</Link>
+              <Link to="/login" onClick={toggleLogin} className="hover:text-[#ED553B] transition ">Login</Link>
             </li>
           ) : (
             <li>

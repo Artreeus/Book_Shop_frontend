@@ -1,5 +1,5 @@
 import { BookOpen } from "lucide-react";
-import React from "react";
+import { Link } from "react-router-dom";
 
 const FeaturedBook = () => {
   return (
@@ -15,7 +15,9 @@ const FeaturedBook = () => {
 
       {/* Right Side - Book Details */}
       <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-8 text-center md:text-left space-y-4">
-        <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">Our Featured Book <BookOpen className="w-12 h-16 text-[#393280]" /> </h1>
+        <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
+          Our Featured Book <BookOpen className="w-12 h-16 text-[#393280]" />{" "}
+        </h1>
         <p className="text-sm text-[#393280] uppercase font-medium">
           By Timbur Hood
         </p>
@@ -23,12 +25,14 @@ const FeaturedBook = () => {
           Birds Gonna Be Happy
         </h2>
         <p className="text-[#393280] mt-4">
-          Birds gonna be Happy is a book about the writer who was sent on a mission to save the world from the evil birds. The writer was sent on a mission to save the world from the evil birds.
+          Birds gonna be Happy is a book about the writer who was sent on a
+          mission to save the world from the evil birds. The writer was sent on
+          a mission to save the world from the evil birds.
         </p>
         <p className="text-xl font-semibold text-red-500 mt-4">$45.00</p>
 
         <button className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700">
-          View More →
+          <Link to="/all-products">View More →</Link>
         </button>
       </div>
     </div>
