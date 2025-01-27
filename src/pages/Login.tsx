@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useAppDispatch } from '../redux/hooks';
 import { setCredentials } from '../redux/features/auth/authSlice';
 import { useLoginMutation } from '../redux/features/auth/authApi';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
   const [login, { isLoading }] = useLoginMutation();
+  const navigate = useNavigate();  // Initialize navigate hook
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,6 +18,7 @@ const Login = () => {
       const response = await login({ email, password }).unwrap();
       dispatch(setCredentials(response.data));
       alert('Login successful');
+      navigate('/');  // Redirect to homepage after successful login
     } catch (err) {
       console.error(err);
       alert('Failed to login');

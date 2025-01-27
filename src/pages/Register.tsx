@@ -6,6 +6,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    name: "", 
     role: "user", // optional, defaulting to "user"
   });
   const [error, setError] = useState("");
@@ -36,6 +37,7 @@ const Register = () => {
         setTimeout(() => {
           navigate("/login"); // Redirect to login page after successful registration
         }, 2000);
+        console.log(response.data);
       } else {
         setError("Registration failed. Please try again.");
       }
@@ -53,6 +55,23 @@ const Register = () => {
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {success && <p className="text-green-500 text-sm mb-4">{success}</p>}
         <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+            <label
+              htmlFor="Text"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
           <div className="mb-4">
             <label
               htmlFor="email"
