@@ -162,7 +162,7 @@ export function BookForm() {
             id="price"
             name="price"
             required
-            min="0"
+            min="1"
             step="0.01"
             value={formData.price}
             onChange={handleChange}

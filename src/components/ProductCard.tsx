@@ -1,6 +1,7 @@
 import { BookOpen, Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion';
 
 interface CartItem {
   _id: string;
@@ -44,6 +45,15 @@ const ProductCard: React.FC = () => {
   };
 
   return (
+    <motion.div
+    className="container mx-auto px-5 py-16"
+    initial="hidden"
+    animate="visible"
+    variants={{
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
+    }}
+  >
     <div className="container mx-auto px-5 py-16">
       <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
         <BookOpen className="w-12 h-16 text-[#393280]" /> Book List
@@ -104,6 +114,7 @@ const ProductCard: React.FC = () => {
         </div>
       )}
     </div>
+    </motion.div>
   );
 };
 
