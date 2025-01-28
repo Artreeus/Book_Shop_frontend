@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AlertCircle, BookPlus, Loader2 } from 'lucide-react';
+import React, { useState } from "react";
+import { AlertCircle, BookPlus, Loader2 } from "lucide-react";
 
 interface BookFormData {
   title: string;
@@ -12,17 +12,17 @@ interface BookFormData {
 }
 
 const initialFormData: BookFormData = {
-  title: '',
-  author: '',
+  title: "",
+  author: "",
   price: 0,
-  category: '',
-  description: '',
+  category: "",
+  description: "",
   quantity: 0,
-  image: '',
+  image: "",
 };
 
 const getAccessToken = () => {
-  const persistRoot = localStorage.getItem('persist:root');
+  const persistRoot = localStorage.getItem("persist:root");
   if (persistRoot) {
     const { auth } = JSON.parse(persistRoot);
     const { accessToken } = JSON.parse(auth);
@@ -37,11 +37,16 @@ export function BookForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: name === 'price' || name === 'quantity' ? parseFloat(value) : value
+      [name]:
+        name === "price" || name === "quantity" ? parseFloat(value) : value,
     }));
   };
 
@@ -53,30 +58,33 @@ export function BookForm() {
 
     const accessToken = getAccessToken();
     if (!accessToken) {
-      setError('Authentication token not found. Please log in again.');
+      setError("Authentication token not found. Please log in again.");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/books', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://bookshopbd-backend.vercel.app/api/books",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json().catch(() => null);
-        throw new Error(data?.message || 'Failed to create book');
+        throw new Error(data?.message || "Failed to create book");
       }
 
       setSuccess(true);
       setFormData(initialFormData);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -85,7 +93,8 @@ export function BookForm() {
   return (
     <div className="max-w-2xl mx-auto p-6">
       <div className="mb-8 text-center">
-      <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4"><h1/>
+        <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
+          <h1 />
           <BookPlus className="w-8 h-8" />
           Add New Book
         </h1>
@@ -106,7 +115,10 @@ export function BookForm() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
             Title
           </label>
           <input
@@ -121,7 +133,10 @@ export function BookForm() {
         </div>
 
         <div>
-          <label htmlFor="author" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="author"
+            className="block text-sm font-medium text-gray-700"
+          >
             Author
           </label>
           <input
@@ -136,7 +151,10 @@ export function BookForm() {
         </div>
 
         <div>
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="price"
+            className="block text-sm font-medium text-gray-700"
+          >
             Price
           </label>
           <input
@@ -153,7 +171,10 @@ export function BookForm() {
         </div>
 
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="category"
+            className="block text-sm font-medium text-gray-700"
+          >
             Category
           </label>
           <select
@@ -174,7 +195,10 @@ export function BookForm() {
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
             Description
           </label>
           <textarea
@@ -190,7 +214,10 @@ export function BookForm() {
         </div>
 
         <div>
-          <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="quantity"
+            className="block text-sm font-medium text-gray-700"
+          >
             Quantity
           </label>
           <input
@@ -205,7 +232,10 @@ export function BookForm() {
           />
         </div>
         <div>
-          <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="image"
+            className="block text-sm font-medium text-gray-700"
+          >
             Image Link (URL)
           </label>
           <input

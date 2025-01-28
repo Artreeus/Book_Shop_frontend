@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Profile = () => {
     return (
@@ -8,4 +7,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;<h1>I am Profile page</h1>
+export default Profile;

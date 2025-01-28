@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Menu, X, ShoppingCart } from "lucide-react";
@@ -25,7 +25,7 @@ const Navbar = ({ cart }: NavbarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md  w-full top-0 z-50 p-4 shadow-lg">
+    <nav className="bg-white shadow-md  w-full top-0 z-50 p-4 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo Section */}
@@ -105,7 +105,7 @@ const Navbar = ({ cart }: NavbarProps) => {
             {/* Cart Dropdown */}
             <div className="relative group">
               <button className="p-2 rounded-full hover:bg-gray-100 transition-colors relative">
-                <ShoppingCart className="h-6 w-6 text-indigo-600" />
+                <ShoppingCart className="h-6 w-6 text-[#393280]" />
                 {totalItems > 0 && (
                   <span className="absolute -top-1 -right-1 bg-orange-600 text-white text-xs  rounded-full w-5 h-5 flex items-center justify-center">
                     {totalItems}

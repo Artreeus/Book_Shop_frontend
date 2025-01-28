@@ -17,7 +17,7 @@ const ProductCard: React.FC = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/books");
+        const response = await fetch("https://bookshopbd-backend.vercel.app/api/books");
         const data = await response.json();
 
         if (data && Array.isArray(data.data)) {

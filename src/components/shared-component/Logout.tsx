@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";

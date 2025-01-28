@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ShoppingCart, AlertCircle, Loader2, ArrowLeft } from 'lucide-react';
+import { ShoppingCart, AlertCircle, Loader2, ArrowLeft } from "lucide-react";
 
 interface Book {
   _id: string;
@@ -25,18 +25,20 @@ export function ProductDetails() {
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/books/${id}`);
+        const response = await fetch(
+          `https://bookshopbd-backend.vercel.app/api/books/${id}`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch book details');
+          throw new Error("Failed to fetch book details");
         }
         const result = await response.json();
         if (result.success && result.data) {
           setBook(result.data);
         } else {
-          throw new Error('Book not found');
+          throw new Error("Book not found");
         }
       } catch (error) {
-        setError(error instanceof Error ? error.message : 'An error occurred');
+        setError(error instanceof Error ? error.message : "An error occurred");
       } finally {
         setLoading(false);
       }
@@ -53,13 +55,13 @@ export function ProductDetails() {
 
   const handleBuyNow = () => {
     if (book) {
-      navigate('/checkout', {
+      navigate("/checkout", {
         state: {
           book: {
             ...book,
-            orderQuantity
-          }
-        }
+            orderQuantity,
+          },
+        },
       });
     }
   };
@@ -77,7 +79,7 @@ export function ProductDetails() {
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-md mx-auto bg-red-50 rounded-lg p-6 text-red-700 flex items-center gap-2">
           <AlertCircle className="w-5 h-5" />
-          <p>{error || 'Book not found'}</p>
+          <p>{error || "Book not found"}</p>
         </div>
       </div>
     );
@@ -96,7 +98,9 @@ export function ProductDetails() {
       <div className="max-w-6xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden md:flex">
         <div className="md:w-1/2 p-8">
           <img
-            src={book.image || 'https://via.placeholder.com/400x600?text=No+Image'}
+            src={
+              book.image || "https://via.placeholder.com/400x600?text=No+Image"
+            }
             alt={book.title}
             className="w-full h-[500px] object-cover rounded-lg shadow-lg"
           />
@@ -121,12 +125,14 @@ export function ProductDetails() {
               <span className="text-2xl font-bold text-gray-900">
                 ${book.price.toFixed(2)}
               </span>
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                book.inStock 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-red-100 text-red-800'
-              }`}>
-                {book.inStock ? 'In Stock' : 'Out of Stock'}
+              <span
+                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  book.inStock
+                    ? "bg-green-100 text-green-800"
+                    : "bg-red-100 text-red-800"
+                }`}
+              >
+                {book.inStock ? "In Stock" : "Out of Stock"}
               </span>
             </div>
 

@@ -1,5 +1,4 @@
-import React from 'react';
-import { BookOpen, Users, Award, Clock, MapPin, PhoneCall, Mail, BookMarked, Bookmark, GraduationCap } from 'lucide-react';
+import { BookOpen, Users, Award, Clock, MapPin, PhoneCall, Mail, BookMarked, GraduationCap } from 'lucide-react';
 
 export default function AboutUs() {
   return (

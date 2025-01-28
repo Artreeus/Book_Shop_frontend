@@ -18,9 +18,14 @@ const getUserRole = () => {
   return null;
 };
 
+interface SidebarProps {
+  role: string; // or the correct type depending on what role is
+  isOpen: boolean;
+  toggleSidebar: () => void;
+}
 
 
-const Sidebar = ({ role, isOpen, toggleSidebar }) => (
+const Sidebar: React.FC<SidebarProps> = ({ role, isOpen, toggleSidebar }) => (
   <div
     className={`${
       isOpen ? 'translate-x-0' : '-translate-x-full'

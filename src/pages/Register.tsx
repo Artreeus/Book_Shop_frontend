@@ -28,7 +28,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/register",
+        "https://bookshopbd-backend.vercel.app/api/users/register",
         formData
       );
       if (response.data.success) {
@@ -45,7 +45,8 @@ const Register = () => {
       }
     } catch (err: any) {
       toast.error(
-        err.response?.data?.message || "Something went wrong. Please try again.",
+        err.response?.data?.message ||
+          "Something went wrong. Please try again.",
         {
           position: "top-right",
         }
@@ -56,7 +57,9 @@ const Register = () => {
   return (
     <div className="min-h-screen flex justify-center items-center hero hero1 hero2">
       <div className="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
-        <h2 className="text-4xl font-bold text-center mb-6 text-[#393280]">Register</h2>
+        <h2 className="text-4xl font-bold text-center mb-6 text-[#393280]">
+          Register
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

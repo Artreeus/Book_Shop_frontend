@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import { Key, AlertCircle, Loader2, CheckCircle, Eye, EyeOff } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  Key,
+  AlertCircle,
+  Loader2,
+  CheckCircle,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
 interface PasswordChangeForm {
   currentPassword: string;
@@ -8,13 +15,13 @@ interface PasswordChangeForm {
 }
 
 const initialFormState: PasswordChangeForm = {
-  currentPassword: '',
-  newPassword: '',
-  confirmPassword: ''
+  currentPassword: "",
+  newPassword: "",
+  confirmPassword: "",
 };
 
 const getAccessToken = () => {
-  const persistRoot = localStorage.getItem('persist:root');
+  const persistRoot = localStorage.getItem("persist:root");
   if (persistRoot) {
     const { auth } = JSON.parse(persistRoot);
     const { accessToken } = JSON.parse(auth);
@@ -24,7 +31,8 @@ const getAccessToken = () => {
 };
 
 export function UserDashboard() {
-  const [formData, setFormData] = useState<PasswordChangeForm>(initialFormState);
+  const [formData, setFormData] =
+    useState<PasswordChangeForm>(initialFormState);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -35,32 +43,36 @@ export function UserDashboard() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     setError(null);
     setSuccess(false);
   };
 
   const validateForm = () => {
-    if (!formData.currentPassword || !formData.newPassword || !formData.confirmPassword) {
-      setError('All fields are required');
+    if (
+      !formData.currentPassword ||
+      !formData.newPassword ||
+      !formData.confirmPassword
+    ) {
+      setError("All fields are required");
       return false;
     }
 
     if (formData.newPassword.length < 6) {
-      setError('New password must be at least 6 characters long');
+      setError("New password must be at least 6 characters long");
       return false;
     }
 
     if (formData.newPassword !== formData.confirmPassword) {
-      setError('New passwords do not match');
+      setError("New passwords do not match");
       return false;
     }
 
     if (formData.currentPassword === formData.newPassword) {
-      setError('New password must be different from current password');
+      setError("New password must be different from current password");
       return false;
     }
 
@@ -69,12 +81,12 @@ export function UserDashboard() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     const accessToken = getAccessToken();
     if (!accessToken) {
-      setError('Authentication token not found. Please log in again.');
+      setError("Authentication token not found. Please log in again.");
       return;
     }
 
@@ -83,27 +95,30 @@ export function UserDashboard() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:5000/api/users/update-password', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({
-          currentPassword: formData.currentPassword,
-          newPassword: formData.newPassword
-        })
-      });
+      const response = await fetch(
+        "https://bookshopbd-backend.vercel.app/api/users/update-password",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            currentPassword: formData.currentPassword,
+            newPassword: formData.newPassword,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Failed to update password');
+        throw new Error(data.message || "Failed to update password");
       }
 
       setSuccess(true);
       setFormData(initialFormState);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -135,12 +150,15 @@ export function UserDashboard() {
           )}
 
           <div>
-            <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="currentPassword"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Current Password
             </label>
             <div className="relative">
               <input
-                type={showCurrentPassword ? 'text' : 'password'}
+                type={showCurrentPassword ? "text" : "password"}
                 id="currentPassword"
                 name="currentPassword"
                 value={formData.currentPassword}
@@ -150,7 +168,7 @@ export function UserDashboard() {
               />
               <button
                 type="button"
-                onClick={() => setShowCurrentPassword(prev => !prev)}
+                onClick={() => setShowCurrentPassword((prev) => !prev)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
               >
                 {showCurrentPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -159,12 +177,15 @@ export function UserDashboard() {
           </div>
 
           <div>
-            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="newPassword"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               New Password
             </label>
             <div className="relative">
               <input
-                type={showNewPassword ? 'text' : 'password'}
+                type={showNewPassword ? "text" : "password"}
                 id="newPassword"
                 name="newPassword"
                 value={formData.newPassword}
@@ -175,7 +196,7 @@ export function UserDashboard() {
               />
               <button
                 type="button"
-                onClick={() => setShowNewPassword(prev => !prev)}
+                onClick={() => setShowNewPassword((prev) => !prev)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
               >
                 {showNewPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -184,12 +205,15 @@ export function UserDashboard() {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Confirm New Password
             </label>
             <div className="relative">
               <input
-                type={showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 name="confirmPassword"
                 value={formData.confirmPassword}
@@ -199,7 +223,7 @@ export function UserDashboard() {
               />
               <button
                 type="button"
-                onClick={() => setShowConfirmPassword(prev => !prev)}
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
               >
                 {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { CreditCard, AlertCircle, Loader2, CheckCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CreditCard, AlertCircle, Loader2, CheckCircle } from "lucide-react";
 
 interface Book {
   _id: string;
@@ -21,16 +21,16 @@ interface CheckoutForm {
 }
 
 const initialFormState: CheckoutForm = {
-  name: '',
-  email: '',
-  phone: '',
-  address: '',
-  city: '',
-  postalCode: ''
+  name: "",
+  email: "",
+  phone: "",
+  address: "",
+  city: "",
+  postalCode: "",
 };
 
 const getAccessToken = () => {
-  const persistRoot = localStorage.getItem('persist:root');
+  const persistRoot = localStorage.getItem("persist:root");
   if (persistRoot) {
     const { auth } = JSON.parse(persistRoot);
     const { accessToken } = JSON.parse(auth);
@@ -64,9 +64,9 @@ const Checkout = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -77,38 +77,43 @@ const Checkout = () => {
 
     const accessToken = getAccessToken();
     if (!accessToken) {
-      setError('Please log in to complete your purchase');
+      setError("Please log in to complete your purchase");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({
-          books: [{
-            book: book._id,
-            quantity: book.orderQuantity
-          }],
-          shippingDetails: formData
-        })
-      });
+      const response = await fetch(
+        "https://bookshopbd-backend.vercel.app/api/orders",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            books: [
+              {
+                book: book._id,
+                quantity: book.orderQuantity,
+              },
+            ],
+            shippingDetails: formData,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Failed to create order');
+        throw new Error(data.message || "Failed to create order");
       }
 
       setSuccess(true);
       setTimeout(() => {
-        navigate('/dashboard/user-orders');
+        navigate("/dashboard/user-orders");
       }, 1500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -128,7 +133,9 @@ const Checkout = () => {
   return (
     <div className="container mx-auto px-6 py-12">
       <div className="max-w-4xl mx-auto">
-      <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">Checkout</h1>
+        <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
+          Checkout
+        </h1>
 
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
@@ -143,14 +150,16 @@ const Checkout = () => {
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
             <div className="flex gap-4 mb-4">
               <img
-                src={book.image || 'https://via.placeholder.com/100'}
+                src={book.image || "https://via.placeholder.com/100"}
                 alt={book.title}
                 className="w-24 h-32 object-cover rounded"
               />
               <div>
                 <h3 className="font-medium">{book.title}</h3>
                 <p className="text-gray-600">by {book.author}</p>
-                <p className="text-sm text-gray-500">Quantity: {book.orderQuantity}</p>
+                <p className="text-sm text-gray-500">
+                  Quantity: {book.orderQuantity}
+                </p>
                 <p className="font-medium">${book.price.toFixed(2)} each</p>
               </div>
             </div>
@@ -163,11 +172,17 @@ const Checkout = () => {
           </div>
 
           {/* Checkout Form */}
-          <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white p-6 rounded-lg shadow-md space-y-4"
+          >
             <h2 className="text-xl font-semibold mb-4">Shipping Details</h2>
-            
+
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Full Name
               </label>
               <input
@@ -182,7 +197,10 @@ const Checkout = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email
               </label>
               <input
@@ -197,7 +215,10 @@ const Checkout = () => {
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Phone
               </label>
               <input
@@ -212,7 +233,10 @@ const Checkout = () => {
             </div>
 
             <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Address
               </label>
               <input
@@ -228,7 +252,10 @@ const Checkout = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="city"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   City
                 </label>
                 <input
@@ -243,7 +270,10 @@ const Checkout = () => {
               </div>
 
               <div>
-                <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="postalCode"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Postal Code
                 </label>
                 <input
@@ -280,11 +310,6 @@ const Checkout = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Checkout;
-
-
-    
-
-

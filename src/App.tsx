@@ -9,7 +9,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { useState } from 'react';
 import Footer from './components/shared-component/Footer';
-import { ToastContainer } from 'react-toastify';
 import { ProductDetails } from './pages/ProductDetails';
 import Navbar from './components/shared-component/Navbar';
 
@@ -31,7 +30,7 @@ function FooterWrapper() {
 }
 
 function App() {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart] = useState<CartItem[]>([]);
 
   return (
     <Router>

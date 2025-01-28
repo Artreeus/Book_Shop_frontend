@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Package, AlertCircle, Loader2, Clock, CheckCircle, XCircle, Search } from 'lucide-react';
+import { useState, useEffect } from "react";
+import {
+  Package,
+  AlertCircle,
+  Loader2,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Search,
+} from "lucide-react";
 
 interface Order {
   _id: string;
@@ -12,12 +20,12 @@ interface Order {
     quantity: number;
   }[];
   totalPrice: number;
-  status: 'pending' | 'processing' | 'completed' | 'cancelled';
+  status: "pending" | "processing" | "completed" | "cancelled";
   createdAt: string;
 }
 
 const getAccessToken = () => {
-  const persistRoot = localStorage.getItem('persist:root');
+  const persistRoot = localStorage.getItem("persist:root");
   if (persistRoot) {
     const { auth } = JSON.parse(persistRoot);
     const { accessToken } = JSON.parse(auth);
@@ -27,35 +35,35 @@ const getAccessToken = () => {
 };
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case 'completed':
-      return 'bg-green-100 text-green-800';
-    case 'cancelled':
-      return 'bg-red-100 text-red-800';
-    case 'processing':
-      return 'bg-blue-100 text-blue-800';
+    case "completed":
+      return "bg-green-100 text-green-800";
+    case "cancelled":
+      return "bg-red-100 text-red-800";
+    case "processing":
+      return "bg-blue-100 text-blue-800";
     default:
-      return 'bg-yellow-100 text-yellow-800';
+      return "bg-yellow-100 text-yellow-800";
   }
 };
 
 const getStatusIcon = (status: string) => {
   switch (status) {
-    case 'completed':
+    case "completed":
       return <CheckCircle className="w-4 h-4" />;
-    case 'cancelled':
+    case "cancelled":
       return <XCircle className="w-4 h-4" />;
-    case 'processing':
+    case "processing":
       return <Package className="w-4 h-4" />;
     default:
       return <Clock className="w-4 h-4" />;
@@ -66,33 +74,106 @@ export function UserOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [updating, setUpdating] = useState<string | null>(null);
 
   const fetchOrders = async () => {
     const accessToken = getAccessToken();
     if (!accessToken) {
-      setError('Please log in to view your orders');
+      setError("Please log in to view your orders");
       setLoading(false);
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/orders/my-orders', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
+      const response = await fetch(
+        "https://bookshopbd-backend.vercel.app/api/orders/my-orders",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      });
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch orders');
+        throw new Error("Failed to fetch orders");
       }
 
       const data = await response.json();
       setOrders(data.data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const cancelOrder = async (orderId: string) => {
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      setError("Please log in to cancel orders");
+      return;
+    }
+
+    setUpdating(orderId);
+    try {
+      const response = await fetch(
+        `https://bookshopbd-backend.vercel.app/api/orders/${orderId}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "cancelled" }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to cancel order");
+      }
+
+      await fetchOrders(); // Refresh orders after cancellation
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to cancel order");
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  const deleteOrder = async (orderId: string) => {
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      setError("Please log in to delete orders");
+      return;
+    }
+
+    setUpdating(orderId);
+    try {
+      const response = await fetch(
+        `https://bookshopbd-backend.vercel.app/api/orders/${orderId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete order");
+      }
+
+      // Remove the order from the local state instead of refetching
+      setOrders((prevOrders) =>
+        prevOrders.filter((order) => order._id !== orderId)
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete order");
+    } finally {
+      setUpdating(null);
     }
   };
 
@@ -100,8 +181,8 @@ export function UserOrders() {
     fetchOrders();
   }, []);
 
-  const filteredOrders = orders.filter(order => 
-    order.books.some(item => 
+  const filteredOrders = orders.filter((order) =>
+    order.books.some((item) =>
       item.book.title.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
@@ -135,6 +216,12 @@ export function UserOrders() {
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
             <AlertCircle className="w-5 h-5" />
             {error}
+            <button
+              onClick={() => setError(null)}
+              className="ml-auto text-red-700 hover:text-red-800"
+            >
+              <XCircle className="w-4 h-4" />
+            </button>
           </div>
         )}
 
@@ -142,27 +229,74 @@ export function UserOrders() {
           <div className="text-center py-12 bg-white rounded-lg shadow">
             <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900">No orders yet</h3>
-            <p className="mt-2 text-gray-500">When you make a purchase, your orders will appear here.</p>
+            <p className="mt-2 text-gray-500">
+              When you make a purchase, your orders will appear here.
+            </p>
           </div>
         ) : (
           <div className="space-y-6">
-            {filteredOrders.map(order => (
-              <div key={order._id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            {filteredOrders.map((order) => (
+              <div
+                key={order._id}
+                className="bg-white rounded-lg shadow-md overflow-hidden"
+              >
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <p className="text-sm text-gray-500">Order ID</p>
                       <p className="font-medium">{order._id}</p>
                     </div>
-                    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
-                      {getStatusIcon(order.status)}
-                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                    </span>
+                    <div className="flex items-center gap-4">
+                      <span
+                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(
+                          order.status
+                        )}`}
+                      >
+                        {getStatusIcon(order.status)}
+                        {order.status.charAt(0).toUpperCase() +
+                          order.status.slice(1)}
+                      </span>
+                      {order.status === "pending" && (
+                        <button
+                          onClick={() => cancelOrder(order._id)}
+                          disabled={updating === order._id}
+                          className="text-red-600 hover:text-red-800 font-medium disabled:opacity-50"
+                        >
+                          {updating === order._id ? (
+                            <span className="flex items-center gap-1">
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Cancelling...
+                            </span>
+                          ) : (
+                            "Cancel Order"
+                          )}
+                        </button>
+                      )}
+                      {order.status === "cancelled" && (
+                        <button
+                          onClick={() => deleteOrder(order._id)}
+                          disabled={updating === order._id}
+                          className="text-gray-600 hover:text-gray-800 font-medium disabled:opacity-50"
+                        >
+                          {updating === order._id ? (
+                            <span className="flex items-center gap-1">
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Deleting...
+                            </span>
+                          ) : (
+                            "Delete Order"
+                          )}
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   <div className="border-t border-b border-gray-200 py-4 my-4">
                     {order.books.map((item, index) => (
-                      <div key={index} className="flex items-center gap-4 mb-4 last:mb-0">
+                      <div
+                        key={index}
+                        className="flex items-center gap-4 mb-4 last:mb-0"
+                      >
                         {item.book.image && (
                           <img
                             src={item.book.image}
@@ -173,7 +307,8 @@ export function UserOrders() {
                         <div className="flex-1">
                           <h4 className="font-medium">{item.book.title}</h4>
                           <p className="text-sm text-gray-500">
-                            Quantity: {item.quantity} × ${item.book.price.toFixed(2)}
+                            Quantity: {item.quantity} × $
+                            {item.book.price.toFixed(2)}
                           </p>
                         </div>
                         <p className="font-medium">

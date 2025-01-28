@@ -26,7 +26,9 @@ const Products: React.FC = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/books");
+        const response = await fetch(
+          "https://bookshopbd-backend.vercel.app/api/books"
+        );
         const data = await response.json();
 
         if (data && Array.isArray(data.data)) {
@@ -41,8 +43,8 @@ const Products: React.FC = () => {
             ...new Set(data.data.map((book: CartItem) => book.category)),
           ];
 
-          setAuthors(authorsList);
-          setCategories(categoriesList);
+          setAuthors(authorsList as string[]);
+          setCategories(categoriesList as string[]);
         } else {
           console.error(
             "API response does not contain a valid 'data' array:",
@@ -206,32 +208,35 @@ const Products: React.FC = () => {
           ) : (
             filteredBooks.map((book) => (
               <div
-  key={book._id}
-  className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-transform transform hover:scale-105"
->
-  <div className="relative">
-    <img
-      src={book.image}
-      alt={book.title}
-      className="w-full h-72 object-cover rounded-lg shadow-lg hover:opacity-90 transition-opacity"
-    />
-  </div>
-  <div className="mt-6 text-center space-y-2">
-    <h2 className="text-2xl text-[#393280] font-semibold">{book.title}</h2>
-    <p className="text-lg text-gray-700 font-medium">
-      Price: ${book.price.toFixed(2)}
-    </p>
-    <p className="text-sm text-gray-500">Author: {book.author}</p>
-    <p className="text-sm text-gray-500">Category: {book.category}</p>
-    <Link
-      to={`/product-details/${book._id}`}
-      className="mt-4 inline-block px-8 py-3 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 transition duration-300 transform hover:scale-105"
-    >
-      View Details
-    </Link>
-  </div>
-</div>
-
+                key={book._id}
+                className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-transform transform hover:scale-105"
+              >
+                <div className="relative">
+                  <img
+                    src={book.image}
+                    alt={book.title}
+                    className="w-full h-72 object-cover rounded-lg shadow-lg hover:opacity-90 transition-opacity"
+                  />
+                </div>
+                <div className="mt-6 text-center space-y-2">
+                  <h2 className="text-2xl text-[#393280] font-semibold">
+                    {book.title}
+                  </h2>
+                  <p className="text-lg text-gray-700 font-medium">
+                    Price: ${book.price.toFixed(2)}
+                  </p>
+                  <p className="text-sm text-gray-500">Author: {book.author}</p>
+                  <p className="text-sm text-gray-500">
+                    Category: {book.category}
+                  </p>
+                  <Link
+                    to={`/product-details/${book._id}`}
+                    className="mt-4 inline-block px-8 py-3 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 transition duration-300 transform hover:scale-105"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
             ))
           )}
         </div>
