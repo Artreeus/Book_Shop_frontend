@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Link, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import  { useState } from 'react';
+import { Link, Route, Routes, Navigate } from 'react-router-dom';
 import { BookForm } from '../components/BookForm';
 import { BookList } from '../components/BookList';
 import { UserManagement } from '../components/UserManagment';
 import { UserDashboard } from '../components/UserDashborad';
 import { Menu, X, BookOpen, Users, Settings, Home, List, Key } from 'lucide-react';
+import { OrderDashboard } from '../components/OrderDashboard';
+import { UserOrders } from '../components/UserOrders';
 
 const getUserRole = () => {
   const storedData = localStorage.getItem('persist:root');
@@ -74,11 +76,11 @@ const Sidebar = ({ role, isOpen, toggleSidebar }) => (
                 </li>
                 <li>
                   <Link
-                    to="/dashboard/admin-route2"
+                    to="/dashboard/order-dashboard"
                     className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
                   >
                     <Settings className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
-                    <span>Admin Settings</span>
+                    <span>Order Managment</span>
                   </Link>
                 </li>
               </>
@@ -96,11 +98,11 @@ const Sidebar = ({ role, isOpen, toggleSidebar }) => (
                 </li>
                 <li>
                   <Link
-                    to="/dashboard/user-route2"
+                    to="/dashboard/user-orders"
                     className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
                   >
                     <Home className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
-                    <span>My Profile</span>
+                    <span>My Orders</span>
                   </Link>
                 </li>
                 <li>
@@ -164,7 +166,9 @@ const Dashboard = () => {
               <Route path="book-form" element={<BookForm />} />
               <Route path="book-list" element={<BookList />} />
               <Route path="user-management" element={<UserManagement />} />
+              <Route path="order-dashboard" element={<OrderDashboard />} />
               <Route path="user-pass" element={<UserDashboard />} />
+              <Route path="user-orders" element={<UserOrders />} />
               <Route
                 path="*"
                 element={

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products';
-import ProductDetails from './pages/ProductDetails';
 import AboutUs from './pages/AboutUs';
 import Checkout from './pages/Checkout';
 import Dashboard from './pages/Dashboard';
@@ -12,6 +11,7 @@ import Register from './pages/Register';
 import { useState } from 'react';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
+import { ProductDetails } from './pages/ProductDetails';
 
 interface CartItem {
   id: number;

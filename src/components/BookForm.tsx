@@ -166,10 +166,10 @@ export function BookForm() {
           >
             <option value="">Select a category</option>
             <option value="Fiction">Fiction</option>
-            <option value="Non-Fiction">Non-Fiction</option>
+            <option value="Religious">Religious</option>
+            <option value="Poetry">Poetry</option>
+            <option value="SelfDevelopment">SelfDevelopment</option>
             <option value="Science">Science</option>
-            <option value="Technology">Technology</option>
-            <option value="Business">Business</option>
           </select>
         </div>
 

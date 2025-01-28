@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Pencil, Trash2, Save, X, AlertCircle, Loader2 } from 'lucide-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Book {
   _id: string;
@@ -37,11 +39,14 @@ export function BookList() {
 
       if (data && Array.isArray(data.data)) {
         setBooks(data.data);
+        toast.success('Books loaded successfully!');
       } else {
         console.error("API response does not contain a valid 'data' array:", data);
+        toast.error('Failed to load books.');
       }
     } catch (error) {
       console.error("Error fetching books:", error);
+      toast.error('An error occurred while fetching books.');
     } finally {
       setLoading(false);
     }
@@ -59,6 +64,7 @@ export function BookList() {
     const accessToken = getAccessToken();
     if (!accessToken) {
       setError('Authentication token not found. Please log in again.');
+      toast.error('Authentication token not found. Please log in again.');
       return;
     }
 
@@ -79,8 +85,11 @@ export function BookList() {
 
       setBooks(books.map(b => b._id === book._id ? book : b));
       setEditingBook(null);
+      toast.success('Book updated successfully!');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred while updating');
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while updating';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setUpdatingId(null);
     }
@@ -90,6 +99,7 @@ export function BookList() {
     const accessToken = getAccessToken();
     if (!accessToken) {
       setError('Authentication token not found. Please log in again.');
+      toast.error('Authentication token not found. Please log in again.');
       return;
     }
 
@@ -111,8 +121,11 @@ export function BookList() {
       }
 
       setBooks(books.filter(book => book._id !== bookId));
+      toast.success('Book deleted successfully!');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred while deleting');
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while deleting';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setDeletingId(null);
     }
@@ -121,15 +134,17 @@ export function BookList() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-      <div className="animate-spin rounded-full border-t-4 border-indigo-600 w-16 h-16"></div>
+        <div className="animate-spin rounded-full border-t-4 border-indigo-600 w-16 h-16"></div>
       </div>
     );
   }
 
   return (
     <div className="container mx-auto p-6">
+      <ToastContainer position="top-right" autoClose={3000} />
+
       <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">Book Management</h1>
-      
+
       {error && (
         <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
           <AlertCircle className="w-5 h-5" />
@@ -234,7 +249,7 @@ export function BookList() {
                   <p className="text-sm text-gray-500 mb-2">{book.category}</p>
                   <p className="text-sm text-gray-600 mb-2">{book.description}</p>
                   <p className="text-sm text-gray-600">Stock: {book.quantity}</p>
-                  
+
                   <div className="flex justify-end gap-2 mt-4">
                     <button
                       onClick={() => handleEdit(book)}
