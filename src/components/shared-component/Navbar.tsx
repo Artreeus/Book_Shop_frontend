@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Menu, X, ShoppingCart } from "lucide-react";
@@ -11,8 +11,6 @@ interface CartItem {
   price: number;
   image: string;
 }
-
-
 
 interface NavbarProps {
   cart: CartItem[];
@@ -32,12 +30,12 @@ const Navbar = ({ cart }: NavbarProps) => {
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <img
-                src="https://i.ibb.co.com/ykBMBBv/sample-logo-1-1.png"
+                src="https://i.ibb.co.com/6RGzpwZ/erasebg-transformed-resized-679904588a746.webp"
                 alt="Logo"
               />
-              <span className="text-lg sm:text-2xl  text-[#393280] font-bold">
-                BookShopBD
-              </span>
+              {/* <span className="text-lg sm:text-2xl  text-[#393280] font-bold">
+  
+              </span> */}
             </Link>
           </div>
 
@@ -60,7 +58,7 @@ const Navbar = ({ cart }: NavbarProps) => {
                 to="/about"
                 className="text-[#393280] font-fold    hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
               >
-                About
+                About us
               </Link>
             </div>
 
@@ -88,7 +86,8 @@ const Navbar = ({ cart }: NavbarProps) => {
                 <>
                   <Link
                     to="/login"
-                    className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors"
+                    className="bg-orange-600 text-white 
+                    px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors"
                   >
                     Login
                   </Link>

@@ -95,7 +95,7 @@ export function BookForm() {
       <div className="mb-8 text-center">
         <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
           <h1 />
-          <BookPlus className="w-8 h-8" />
+          <BookPlus className="w-12 h-12" />
           Add New Book
         </h1>
       </div>

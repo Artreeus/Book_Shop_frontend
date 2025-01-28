@@ -15,7 +15,7 @@ const FeaturedBook = () => {
 
       {/* Right Side - Book Details */}
       <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-8 text-center md:text-left space-y-4">
-        <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
+        <h1 className="text-[#393280] text-5xl py-6 flex lg:flex-row md:flex-row-reverse sm:flex-col items-center gap-4">
           Our Featured Book <BookOpen className="w-12 h-16 text-[#393280]" />{" "}
         </h1>
         <p className="text-sm text-[#393280] uppercase font-medium">

@@ -1,5 +1,5 @@
 import  { useState, useEffect } from "react";
-import { Pencil, Trash2, Save, X, AlertCircle, Loader2 } from "lucide-react";
+import { Pencil, Trash2, Save, X, AlertCircle, Loader2, BookOpenCheckIcon } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -157,7 +157,7 @@ export function BookList() {
       <ToastContainer position="top-right" autoClose={3000} />
 
       <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
-        Book Management
+       <BookOpenCheckIcon className="w-12 h-12"/> Book Management
       </h1>
 
       {error && (

@@ -161,7 +161,8 @@ const Dashboard = () => {
         />
       )}
 
-      <div className="flex">
+<div className="flex flex-col sm:flex-col md:flex-row lg:flex-row">
+
         <Sidebar role={role} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         
         {/* Main Content */}

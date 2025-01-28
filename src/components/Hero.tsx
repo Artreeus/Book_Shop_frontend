@@ -11,7 +11,8 @@ const Hero = () => {
           Welcome To <span className="italic ">BookShopBD</span> 
           </h1>
           <p className="herop">
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis urna, a eu.",
+            A place where you can find your favorite books and novels. We have
+            a wide range of collection from different authors and genres.
           </p>
           <button className="mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700">
             Read More →
