@@ -17,7 +17,7 @@ const initialFormData: BookFormData = {
   price: 0,
   category: "",
   description: "",
-  quantity: 0,
+  quantity: 1,
   image: "",
 };
 

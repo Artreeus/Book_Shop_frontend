@@ -58,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, isOpen, toggleSidebar }) => (
                     className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
                   >
                     <BookOpen className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
-                    <span>Book Form</span>
+                    <span>Add Book </span>
                   </Link>
                 </li>
                 <li>
@@ -67,7 +67,7 @@ const Sidebar: React.FC<SidebarProps> = ({ role, isOpen, toggleSidebar }) => (
                     className="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors group"
                   >
                     <List className="h-5 w-5 mr-3 text-gray-400 group-hover:text-indigo-400" />
-                    <span>Book List</span>
+                    <span> Book Managment</span>
                   </Link>
                 </li>
                 <li>
