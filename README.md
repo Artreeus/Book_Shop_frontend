@@ -1,4 +1,4 @@
-# Book Store Client
+# BookShopBd Client
 
 A modern web application for managing and browsing books, developed using React, TypeScript, and Redux. This project utilizes several state-of-the-art libraries and tools, including Material-UI for styling and TailwindCSS for custom design. The app provides users with features like product browsing, cart management, and profile customization.
 
