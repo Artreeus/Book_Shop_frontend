@@ -21,7 +21,7 @@ const Login = () => {
     try {
       const response = await login({ email, password }).unwrap();
       dispatch(setCredentials(response.data));
-      toast.success('Login successful!'); // Success toast
+      toast.success('Login successful...Redirecting to the Home page!!'); // Success toast
       setTimeout(() => navigate('/'), 1500);
     } catch (err: any) {
       if (err?.status === 401) {

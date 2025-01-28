@@ -1,6 +1,6 @@
 import React from "react";
-import { useAppDispatch } from "../redux/hooks";
-import { logout } from "../redux/features/auth/authSlice";
+import { useAppDispatch } from "../../redux/hooks";
+import { logout } from "../../redux/features/auth/authSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -15,8 +15,8 @@ const Logout = () => {
       position: "top-right",
     });
     setTimeout(() => {
-        navigate("/login"); // Redirect to login page after successful registration
-      });
+      navigate("/login"); // Redirect to login page after successful registration
+    });
   };
 
   return <button onClick={handleLogout}>Logout</button>;

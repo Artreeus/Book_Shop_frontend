@@ -1,12 +1,12 @@
 import  { useState } from 'react';
 import { Link, Route, Routes, Navigate } from 'react-router-dom';
-import { BookForm } from '../components/BookForm';
-import { BookList } from '../components/BookList';
-import { UserManagement } from '../components/UserManagment';
-import { UserDashboard } from '../components/UserDashborad';
+import { BookForm } from '../components/Admin-Component/BookForm';
+import { BookList } from '../components/Admin-Component/BookList';
+import { UserManagement } from '../components/Admin-Component/UserManagment';
+import { UserDashboard } from '../components/User-component/UserDashborad';
 import { Menu, X, BookOpen, Users, Settings, Home, List, Key } from 'lucide-react';
-import { OrderDashboard } from '../components/OrderDashboard';
-import { UserOrders } from '../components/UserOrders';
+import { OrderDashboard } from '../components/Admin-Component/OrderDashboard';
+import { UserOrders } from '../components/User-component/UserOrders';
 
 const getUserRole = () => {
   const storedData = localStorage.getItem('persist:root');

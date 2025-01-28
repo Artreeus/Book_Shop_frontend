@@ -1,6 +1,6 @@
 import { BookOpen, Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface CartItem {
   _id: string;
@@ -61,8 +61,9 @@ const ProductCard: React.FC = () => {
               const randomReviews = generateRandomReviews(); // Generate random reviews for each book
 
               return (
-                <div
+                <Link
                   key={book._id}
+                  to={`/product-details/${book._id}`} // Link to the product details page with the book's ID
                   className="bg-white shadow-2xl rounded-lg p-4 hover:shadow-lg transition relative hover:scale-105"
                 >
                   <div>
@@ -84,7 +85,7 @@ const ProductCard: React.FC = () => {
                       <span className="ml-2 text-sm text-gray-600">{randomReviews} Reviews</span>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

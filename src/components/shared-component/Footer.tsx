@@ -12,10 +12,10 @@ const Footer = () => {
               <img src="https://i.ibb.co.com/ykBMBBv/sample-logo-1-1.png" alt="Logo" />
               {/* <img src="bLogo.png" alt="" /> */}
             </div>
-            <p className="text-gray-600 max-w-sm">
+            <p className="text-[#393280]  max-w-sm">
              BookSHopBd is a Bangladeshi Book shop Where Users can Buy Books and Ebooks. <br /> We have a wide range of books and ebooks.
             </p>
-            {/* <div className="flex space-x-4">
+            <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
                 <Facebook className="w-6 h-6" />
               </a>
@@ -28,7 +28,7 @@ const Footer = () => {
               <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
                 <Youtube className="w-6 h-6" />
               </a>
-            </div> */}
+            </div>
           </div>
 
           {/* Company Links */}
@@ -37,7 +37,7 @@ const Footer = () => {
             <ul className="space-y-4 ">
               {['HOME', 'ABOUT US', 'BOOKS', 'EBOOKS', 'NEW RELEASE', 'CONTACT US', 'BLOG'].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-gray-600 hover:font-bold transition-colors">
+                  <a href="#" className="text-[#393280]  hover:font-bold transition-colors">
                     {item}
                   </a>
                 </li>
@@ -71,7 +71,7 @@ const Footer = () => {
                   />
                   <div>
                     <h4 className="font-medium text-red-500">{news.title}</h4>
-                    <p className="text-sm text-gray-600 mt-1">{news.description}</p>
+                    <p className="text-sm text-[#393280]  mt-1">{news.description}</p>
                     <span className="text-sm text-orange-400 mt-2 block">{news.date}</span>
                   </div>
                 </div>
@@ -83,7 +83,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-600 text-sm">
+            <p className="text-[#393280]  text-sm">
               © 2025 BookShopBd. All Rights Reserved.
             </p>
             <div className="flex space-x-4 mt-4 md:mt-0">
@@ -91,7 +91,7 @@ const Footer = () => {
                 Privacy
               </a>
               <span className="text-gray-300">|</span>
-              <a href="#" className="text-gray-600 hover:text-gray-800 text-sm">
+              <a href="#" className="text-[#393280]  hover:text-gray-800 text-sm">
                 Terms of Service
               </a>
             </div>

@@ -9,7 +9,7 @@ const Hero = () => {
         {/* Text Section */}
         <div className="w-full lg:w-1/2 space-y-7">
           <h1 className="her0h1">
-          Welcome To <span className="">BookShopBD</span> 
+          Welcome To <span className="italic ">BookShopBD</span> 
           </h1>
           <p className="herop">
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend. Amet, quis urna, a eu.",

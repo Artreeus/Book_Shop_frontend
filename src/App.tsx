@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'; // Import Router and useLocation
-import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import AboutUs from './pages/AboutUs';
@@ -9,9 +8,10 @@ import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { useState } from 'react';
-import Footer from './components/Footer';
+import Footer from './components/shared-component/Footer';
 import { ToastContainer } from 'react-toastify';
 import { ProductDetails } from './pages/ProductDetails';
+import Navbar from './components/shared-component/Navbar';
 
 interface CartItem {
   id: number;

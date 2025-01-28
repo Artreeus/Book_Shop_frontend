@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Logout from "./Logout";
 import { Menu, X, ShoppingCart } from "lucide-react";
-import { RootState } from "../redux/store";
+import { RootState } from "../../redux/store";
+import Logout from "./Logout";
 
 interface CartItem {
   id: number;
@@ -11,6 +11,8 @@ interface CartItem {
   price: number;
   image: string;
 }
+
+
 
 interface NavbarProps {
   cart: CartItem[];
@@ -29,21 +31,35 @@ const Navbar = ({ cart }: NavbarProps) => {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="https://i.ibb.co.com/ykBMBBv/sample-logo-1-1.png" alt="Logo"  />
-              <span className="text-lg sm:text-2xl font-bold text-gray-900">BookShopBD</span>
+              <img
+                src="https://i.ibb.co.com/ykBMBBv/sample-logo-1-1.png"
+                alt="Logo"
+              />
+              <span className="text-lg sm:text-2xl  text-[#393280] font-bold">
+                BookShopBD
+              </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
             <div className="flex space-x-6">
-              <Link to="/" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link
+                to="/"
+                className="text-[#393280] font-fold    hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
                 Home
               </Link>
-              <Link to="/all-products" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link
+                to="/all-products"
+                className="text-[#393280] font-fold    hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
                 All Products
               </Link>
-              <Link to="/about" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <Link
+                to="/about"
+                className="text-[#393280] font-fold    hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
                 About
               </Link>
             </div>
@@ -52,10 +68,16 @@ const Navbar = ({ cart }: NavbarProps) => {
             <div className="flex items-center space-x-4">
               {isLoggedIn ? (
                 <>
-                  <Link to="/checkout" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  <Link
+                    to="/checkout"
+                    className="text-[#393280] font-fold    hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
                     Checkout
                   </Link>
-                  <Link to="/dashboard" className="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  <Link
+                    to="/dashboard"
+                    className="text-[#393280] font-fold    hover:text-orange-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
                     Dashboard
                   </Link>
                   <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
@@ -64,10 +86,16 @@ const Navbar = ({ cart }: NavbarProps) => {
                 </>
               ) : (
                 <>
-                  <Link to="/login" className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors">
+                  <Link
+                    to="/login"
+                    className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors"
+                  >
                     Login
                   </Link>
-                  <Link to="/register" className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors">
+                  <Link
+                    to="/register"
+                    className="bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-orange-700 transition-colors"
+                  >
                     Register
                   </Link>
                 </>
@@ -77,9 +105,9 @@ const Navbar = ({ cart }: NavbarProps) => {
             {/* Cart Dropdown */}
             <div className="relative group">
               <button className="p-2 rounded-full hover:bg-gray-100 transition-colors relative">
-                <ShoppingCart className="h-6 w-6 text-gray-700" />
+                <ShoppingCart className="h-6 w-6 text-indigo-600" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-orange-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-orange-600 text-white text-xs  rounded-full w-5 h-5 flex items-center justify-center">
                     {totalItems}
                   </span>
                 )}
@@ -92,11 +120,22 @@ const Navbar = ({ cart }: NavbarProps) => {
                     <>
                       <div className="max-h-64 overflow-y-auto">
                         {cart.map((item) => (
-                          <div key={item.id} className="flex items-center space-x-4 py-3 border-b border-gray-100">
-                            <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded-md" />
+                          <div
+                            key={item.id}
+                            className="flex items-center space-x-4 py-3 border-b border-gray-100"
+                          >
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-12 h-12 object-cover rounded-md"
+                            />
                             <div className="flex-1">
-                              <h3 className="text-sm font-medium text-gray-900">{item.name}</h3>
-                              <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
+                              <h3 className="text-sm font-medium text-gray-900">
+                                {item.name}
+                              </h3>
+                              <p className="text-sm text-gray-500">
+                                ${item.price.toFixed(2)}
+                              </p>
                             </div>
                           </div>
                         ))}
@@ -115,7 +154,9 @@ const Navbar = ({ cart }: NavbarProps) => {
                       </div>
                     </>
                   ) : (
-                    <p className="text-center text-gray-500 py-4">Your cart is empty</p>
+                    <p className="text-center text-gray-500 py-4">
+                      Your cart is empty
+                    </p>
                   )}
                 </div>
               </div>
@@ -126,7 +167,7 @@ const Navbar = ({ cart }: NavbarProps) => {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none transition-colors duration-200"
+              className="p-2 rounded-md text-[#393280] font-fold    hover:bg-gray-100 focus:outline-none transition-colors duration-200"
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6 transition-transform duration-200 ease-in-out" />
@@ -139,27 +180,27 @@ const Navbar = ({ cart }: NavbarProps) => {
       </div>
 
       {/* Mobile menu with smooth animation */}
-      <div 
+      <div
         className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-100">
           <Link
             to="/"
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+            className="block px-3 py-2 rounded-md text-base font-medium text-[#393280] font-fold    hover:text-orange-600 hover:bg-gray-50 transition-colors"
           >
             Home
           </Link>
           <Link
             to="/all-products"
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+            className="block px-3 py-2 rounded-md text-base font-medium text-[#393280] font-fold    hover:text-orange-600 hover:bg-gray-50 transition-colors"
           >
             All Products
           </Link>
           <Link
             to="/about"
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+            className="block px-3 py-2 rounded-md text-base font-medium text-[#393280] font-fold    hover:text-orange-600 hover:bg-gray-50 transition-colors"
           >
             About
           </Link>
@@ -167,13 +208,13 @@ const Navbar = ({ cart }: NavbarProps) => {
             <>
               <Link
                 to="/checkout"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+                className="block px-3 py-2 rounded-md text-base font-medium text-[#393280] font-fold    hover:text-orange-600 hover:bg-gray-50 transition-colors"
               >
                 Checkout
               </Link>
               <Link
                 to="/dashboard"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+                className="block px-3 py-2 rounded-md text-base font-medium text-[#393280] font-fold    hover:text-orange-600 hover:bg-gray-50 transition-colors"
               >
                 Dashboard
               </Link>
@@ -187,13 +228,13 @@ const Navbar = ({ cart }: NavbarProps) => {
             <>
               <Link
                 to="/login"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+                className="block px-3 py-2 rounded-md text-base font-medium text-[#393280] font-fold    hover:text-orange-600 hover:bg-gray-50 transition-colors"
               >
                 Login
               </Link>
               <Link
                 to="/register"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-gray-50 transition-colors"
+                className="block px-3 py-2 rounded-md text-base font-medium text-[#393280] font-fold    hover:text-orange-600 hover:bg-gray-50 transition-colors"
               >
                 Register
               </Link>

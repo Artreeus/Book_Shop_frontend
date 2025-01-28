@@ -106,7 +106,7 @@ const Checkout = () => {
       setSuccess(true);
       setTimeout(() => {
         navigate('/dashboard/user-orders');
-      }, 2000);
+      }, 1500);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -128,7 +128,7 @@ const Checkout = () => {
   return (
     <div className="container mx-auto px-6 py-12">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+      <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">Checkout</h1>
 
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
