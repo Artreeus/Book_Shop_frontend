@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CreditCard, AlertCircle, Loader2, CheckCircle } from "lucide-react";
 
@@ -49,6 +49,13 @@ const Checkout = () => {
 
   const book = location.state?.book as Book;
 
+  useEffect(() => {
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
+
   if (!book) {
     return (
       <div className="container mx-auto px-6 py-12">
@@ -79,6 +86,7 @@ const Checkout = () => {
     if (!accessToken) {
       setError("Please log in to complete your purchase");
       setLoading(false);
+      navigate("/login", { replace: true });
       return;
     }
 
@@ -177,116 +185,25 @@ const Checkout = () => {
             className="bg-white p-6 rounded-lg shadow-md space-y-4"
           >
             <h2 className="text-xl font-semibold mb-4">Shipping Details</h2>
-
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="phone"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Phone
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                required
-                value={formData.phone}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="address"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Address
-              </label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                required
-                value={formData.address}
-                onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
+            {Object.keys(initialFormState).map((key) => (
+              <div key={key}>
                 <label
-                  htmlFor="city"
+                  htmlFor={key}
                   className="block text-sm font-medium text-gray-700"
                 >
-                  City
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
                 </label>
                 <input
                   type="text"
-                  id="city"
-                  name="city"
+                  id={key}
+                  name={key}
                   required
-                  value={formData.city}
+                  value={formData[key as keyof CheckoutForm]}
                   onChange={handleChange}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
-
-              <div>
-                <label
-                  htmlFor="postalCode"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Postal Code
-                </label>
-                <input
-                  type="text"
-                  id="postalCode"
-                  name="postalCode"
-                  required
-                  value={formData.postalCode}
-                  onChange={handleChange}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                />
-              </div>
-            </div>
+            ))}
 
             <button
               type="submit"

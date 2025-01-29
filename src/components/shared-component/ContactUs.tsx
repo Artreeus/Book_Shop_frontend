@@ -21,7 +21,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8 hero2">
+    <div className="py-16 bg-gray-50 px-4 sm:px-6 lg:px-8 hero3">
       <Toaster position="top-center" />
       <div className="max-w-7xl mx-auto">
         <div className="text-center">

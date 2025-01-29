@@ -104,11 +104,11 @@ const Footer = () => {
                     className="w-20 h-20 object-cover rounded-lg"
                   />
                   <div>
-                    <h4 className="font-medium text-red-500">{news.title}</h4>
+                    <h4 className="font-medium text-orange-600">{news.title}</h4>
                     <p className="text-sm text-[#393280]  mt-1">
                       {news.description}
                     </p>
-                    <span className="text-sm text-orange-400 mt-2 block">
+                    <span className="text-sm text-orange-600 mt-2 block">
                       {news.date}
                     </span>
                   </div>
@@ -122,10 +122,10 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-[#393280]  text-sm">
-              © 2025 BookShopBd. All Rights Reserved.
+              © 2025 <span className="text-orange-600">BookShopBd.</span>  All Rights Reserved.
             </p>
             <div className="flex space-x-4 mt-4 md:mt-0">
-              <a href="#" className="text-red-500 hover:text-red-600 text-sm">
+              <a href="#" className="text-orange-600 hover:text-orange-600 text-sm">
                 Privacy
               </a>
               <span className="text-gray-300">|</span>

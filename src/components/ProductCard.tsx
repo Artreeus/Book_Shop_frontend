@@ -54,7 +54,7 @@ const ProductCard: React.FC = () => {
       visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
     }}
   >
-    <div className="container mx-auto px-5 py-16">
+    <div className="container mx-auto px-3 py-12">
       <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4">
         <BookOpen className="w-12 h-16 text-[#393280]" /> Book List
       </h1>
