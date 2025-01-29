@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CreditCard, AlertCircle, Loader2, CheckCircle } from "lucide-react";
+import { toast } from "react-toastify";
 
 interface Book {
   _id: string;
@@ -52,7 +53,11 @@ const Checkout = () => {
   useEffect(() => {
     const accessToken = getAccessToken();
     if (!accessToken) {
+      
       navigate("/login", { replace: true });
+      setTimeout(() => {
+        toast.error("Please log in to complete your purchase", {  autoClose: 3000 });
+      }, 1500);
     }
   }, [navigate]);
 

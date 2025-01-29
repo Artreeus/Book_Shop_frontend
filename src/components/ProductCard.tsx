@@ -2,6 +2,7 @@ import { BookOpen, Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
+import Loader from "./shared-component/Loader";
 
 interface CartItem {
   _id: string;
@@ -61,9 +62,7 @@ const ProductCard: React.FC = () => {
 
       {/* Loading Spinner */}
       {loading ? (
-        <div className="flex justify-center items-center h-96">
-          <div className="animate-spin rounded-full border-t-4 border-indigo-600 w-16 h-16"></div>
-        </div>
+       <Loader/>
       ) : (
         <div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

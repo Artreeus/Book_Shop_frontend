@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ShoppingCart, AlertCircle, Loader2, ArrowLeft } from "lucide-react";
+import Loader from "../components/shared-component/Loader";
 
 interface Book {
   _id: string;
@@ -69,7 +70,7 @@ export function ProductDetails() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader />
       </div>
     );
   }

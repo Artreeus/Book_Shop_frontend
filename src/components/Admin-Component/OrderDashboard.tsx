@@ -10,6 +10,7 @@ import {
   XCircle,
   BookOpen,
 } from "lucide-react";
+import Loader from "../shared-component/Loader";
 
 interface Order {
   _id: string;
@@ -180,7 +181,7 @@ export function OrderDashboard() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+       <Loader/>
       </div>
     );
   }
