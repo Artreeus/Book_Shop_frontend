@@ -139,8 +139,8 @@ Contributions are welcome! Please follow the steps below:
 
 If you have any questions or suggestions, feel free to reach out:
 
-- **Email**: your-email@example.com
-- **GitHub**: [your-username](https://github.com/your-username)
+- **Email**: ratulhasan048@gmail.com
+- **GitHub**: [Artreeus](https://github.com/artreeus)
 
 ---
 
