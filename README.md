@@ -38,7 +38,7 @@ A modern web application for managing and browsing books, developed using React,
 ## Prerequisites
 
 - **Node.js** (v16 or higher)
-- **npm** or **yarn**
+- **npm** or **yarn** or **bun**
 
 ---
 
