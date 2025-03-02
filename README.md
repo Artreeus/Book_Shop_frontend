@@ -4,7 +4,7 @@ A modern web application for managing and browsing books, developed using React,
 
 - **Live Link**: https://bookshopbd-frontend.vercel.app/
 ---
-ljj
+
 ## Features
 
 - **User Authentication**: Login and register functionality.
