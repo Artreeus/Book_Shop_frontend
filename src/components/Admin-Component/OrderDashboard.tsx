@@ -4,7 +4,6 @@ import {
   Package,
   TrendingUp,
   AlertCircle,
-  Loader2,
   Clock,
   CheckCircle,
   XCircle,

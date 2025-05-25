@@ -1,5 +1,6 @@
 import  { useState, useEffect } from "react";
-import { Ban, UserCheck, AlertCircle, Loader2, Users } from "lucide-react";
+import { Ban, UserCheck, AlertCircle, Users, Loader2 } from "lucide-react";
+import Loader from "../shared-component/Loader";
 
 interface User {
   _id: string;
@@ -106,7 +107,7 @@ export function UserManagement() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        <Loader />
       </div>
     );
   }

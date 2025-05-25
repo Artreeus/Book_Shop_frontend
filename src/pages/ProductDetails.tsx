@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ShoppingCart, AlertCircle, Loader2, ArrowLeft } from "lucide-react";
+import { ShoppingCart, AlertCircle, ArrowLeft } from "lucide-react";
 import Loader from "../components/shared-component/Loader";
 
 interface Book {
