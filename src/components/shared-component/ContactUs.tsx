@@ -265,13 +265,100 @@ const ContactUs = () => {
           </div>
 
           {/* Map Section */}
-          <div className="mt-16">
-            <div className="bg-white p-2 rounded-2xl shadow-2xl">
-              <div className="aspect-w-16 aspect-h-9 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl flex items-center justify-center h-96">
-                <div className="text-center">
-                  <MapPin className="w-16 h-16 text-purple-600 mx-auto mb-4" />
-                  <p className="text-gray-600 font-medium">Interactive Map Coming Soon</p>
-                  <p className="text-sm text-gray-500 mt-2">Find us at 1/11 Allenbari Staff Quarter, Dhaka</p>
+            <div className="mt-16">
+            <div className="bg-white p-6 rounded-2xl shadow-2xl">
+              <div className="mb-4">
+                <h3 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                  <MapPin className="w-6 h-6 text-purple-600" />
+                  Find Our Location
+                </h3>
+                <p className="text-gray-600 mt-2">Visit our bookshop at Allenbari Staff Quarter, Dhaka</p>
+              </div>
+              
+              <div className="relative bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl overflow-hidden h-96 border-2 border-gray-200">
+                {/* Demo Map with Interactive Elements */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-green-50 to-yellow-50">
+                  {/* Street Grid */}
+                  <svg className="absolute inset-0 w-full h-full opacity-30">
+                    <defs>
+                      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#9CA3AF" strokeWidth="1"/>
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                  </svg>
+                  
+                  {/* Roads */}
+                  <div className="absolute top-1/2 left-0 w-full h-3 bg-gray-300 transform -translate-y-1/2"></div>
+                  <div className="absolute left-1/2 top-0 w-3 h-full bg-gray-300 transform -translate-x-1/2"></div>
+                  
+                  {/* Buildings */}
+                  <div className="absolute top-16 left-16 w-12 h-12 bg-blue-200 rounded shadow-md border border-blue-300"></div>
+                  <div className="absolute top-32 left-32 w-16 h-10 bg-green-200 rounded shadow-md border border-green-300"></div>
+                  <div className="absolute bottom-20 right-20 w-14 h-14 bg-yellow-200 rounded shadow-md border border-yellow-300"></div>
+                  <div className="absolute bottom-32 left-20 w-10 h-16 bg-red-200 rounded shadow-md border border-red-300"></div>
+                  
+                  {/* Our Bookshop Location - Animated Marker */}
+                  <div className="absolute top-1/3 left-2/3 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="relative">
+                      {/* Pulsing circle */}
+                      <div className="absolute inset-0 w-12 h-12 bg-purple-500 rounded-full animate-ping opacity-20"></div>
+                      <div className="absolute inset-0 w-8 h-8 bg-purple-500 rounded-full animate-pulse opacity-40 top-2 left-2"></div>
+                      
+                      {/* Main marker */}
+                      <div className="relative bg-purple-600 text-white p-3 rounded-full shadow-lg transform hover:scale-110 transition-transform duration-200 cursor-pointer">
+                        <MapPin className="w-6 h-6" />
+                      </div>
+                      
+                      {/* Info popup */}
+                      <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-white p-3 rounded-lg shadow-lg border-2 border-purple-200 whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity duration-200">
+                        <div className="text-sm font-semibold text-gray-900">BookShop BD</div>
+                        <div className="text-xs text-gray-600">1/11 Allenbari Staff Quarter</div>
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-purple-200"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Nearby landmarks */}
+                  <div className="absolute top-1/4 left-1/4">
+                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="text-xs text-green-700 mt-1 font-medium">Park</div>
+                  </div>
+                  
+                  <div className="absolute bottom-1/4 right-1/4">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                    <div className="text-xs text-blue-700 mt-1 font-medium">School</div>
+                  </div>
+                  
+                  {/* Navigation Controls */}
+                  <div className="absolute top-4 right-4 flex flex-col gap-2">
+                    <button className="bg-white p-2 rounded shadow-md hover:bg-gray-50 transition-colors">
+                      <div className="w-4 h-4 flex items-center justify-center text-gray-600 font-bold">+</div>
+                    </button>
+                    <button className="bg-white p-2 rounded shadow-md hover:bg-gray-50 transition-colors">
+                      <div className="w-4 h-4 flex items-center justify-center text-gray-600 font-bold">−</div>
+                    </button>
+                  </div>
+                  
+                  {/* Map attribution */}
+                  <div className="absolute bottom-2 left-2 text-xs text-gray-500 bg-white bg-opacity-80 px-2 py-1 rounded">
+                    Demo Map - Dhaka, Bangladesh
+                  </div>
+                </div>
+                
+                {/* Interactive overlay message */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="bg-white bg-opacity-90 p-6 rounded-xl shadow-lg text-center max-w-sm mx-4">
+                    <MapPin className="w-12 h-12 text-purple-600 mx-auto mb-3" />
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Interactive Demo Map</h4>
+                    <p className="text-sm text-gray-600 mb-3">
+                      This is a demo representation of our location in Dhaka. 
+                    </p>
+                    <div className="text-xs text-gray-500 border-t pt-2">
+                      <div className="font-medium">📍 1/11 Allenbari Staff Quarter</div>
+                      <div>Dhaka, Bangladesh</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
