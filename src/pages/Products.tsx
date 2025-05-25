@@ -420,12 +420,7 @@ const Products: React.FC = () => {
                                   />
                                 </button>
 
-                                <div className="absolute bottom-4 left-4 right-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                  <button className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 flex items-center justify-center gap-2 shadow-lg">
-                                    <ShoppingCart className="w-5 h-5" />
-                                    Add to Cart
-                                  </button>
-                                </div>
+                                
                               </div>
 
                               <div className="p-6">
