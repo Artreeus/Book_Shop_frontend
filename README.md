@@ -27,7 +27,6 @@ A modern web application for managing and browsing books, developed using React,
 - **React Router**: Navigation and routing.
 
 ### Styling:
-- **Material-UI**: Pre-built UI components.
 - **TailwindCSS**: Utility-first CSS framework.
 - **DaisyUI**: TailwindCSS components for rapid UI development.
 
@@ -39,7 +38,7 @@ A modern web application for managing and browsing books, developed using React,
 ## Prerequisites
 
 - **Node.js** (v16 or higher)
-- **npm** or **yarn**
+- **npm** or **yarn** or **bun**
 
 ---
 
@@ -140,8 +139,8 @@ Contributions are welcome! Please follow the steps below:
 
 If you have any questions or suggestions, feel free to reach out:
 
-- **Email**: your-email@example.com
-- **GitHub**: [your-username](https://github.com/your-username)
+- **Email**: ratulhasan048@gmail.com
+- **GitHub**: [Artreeus](https://github.com/artreeus)
 
 ---
 
