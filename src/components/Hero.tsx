@@ -1,28 +1,103 @@
-import { motion } from "framer-motion";
-import { BookOpen, Star, ArrowRight, Sparkles, TrendingUp, Users } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  BookOpen,
+  Star,
+  ArrowRight,
+  Sparkles,
+  TrendingUp,
+  Users,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+} from "lucide-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
-  const [currentBook, setCurrentBook] = useState(0);
-  const floatingBooks = [
-    { rotate: 15, x: -20, y: -30 },
-    { rotate: -10, x: 40, y: 20 },
-    { rotate: 25, x: -40, y: 40 },
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const navigate = useNavigate();
+
+  // Featured books data for the slider
+  const featuredBooks = [
+    {
+      id: 1,
+      title: "The Midnight Library",
+      author: "Matt Haig",
+      price: 29.99,
+      oldPrice: 39.99,
+      rating: 4.8,
+      reviews: 2847,
+      image:
+        "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80",
+      badge: "Bestseller",
+      description:
+        "A dazzling novel about all the choices that go into a life well lived.",
+    },
+    {
+      id: 2,
+      title: "Atomic Habits",
+      author: "James Clear",
+      price: 24.99,
+      oldPrice: 34.99,
+      rating: 4.9,
+      reviews: 5123,
+      image:
+        "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80",
+      badge: "Staff Pick",
+      description:
+        "Tiny changes, remarkable results. Transform your habits, transform your life.",
+    },
+    {
+      id: 3,
+      title: "Where the Crawdads Sing",
+      author: "Delia Owens",
+      price: 32.99,
+      oldPrice: 42.99,
+      rating: 4.7,
+      reviews: 3892,
+      image:
+        "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=400&q=80",
+      badge: "Award Winner",
+      description:
+        "A gorgeous and unforgettable novel of a young woman's coming of age.",
+    },
   ];
 
-  // Stats counter animation
+  // Stats for bottom section
   const stats = [
     { label: "Happy Readers", value: 50000, icon: Users },
     { label: "Books Available", value: 10000, icon: BookOpen },
     { label: "Five Star Reviews", value: 4800, icon: Star },
   ];
 
+  // Auto-play slider
   useEffect(() => {
+    if (!isAutoPlaying) return;
+
     const interval = setInterval(() => {
-      setCurrentBook((prev) => (prev + 1) % floatingBooks.length);
-    }, 3000);
+      setCurrentSlide((prev) => (prev + 1) % featuredBooks.length);
+    }, 5000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [isAutoPlaying, featuredBooks.length]);
+
+  const nextSlide = () => {
+    setIsAutoPlaying(false);
+    setCurrentSlide((prev) => (prev + 1) % featuredBooks.length);
+  };
+
+  const prevSlide = () => {
+    setIsAutoPlaying(false);
+    setCurrentSlide(
+      (prev) => (prev - 1 + featuredBooks.length) % featuredBooks.length
+    );
+  };
+
+  const goToSlide = (index: number) => {
+    setIsAutoPlaying(false);
+    setCurrentSlide(index);
+  };
 
   return (
     <motion.section
@@ -118,9 +193,10 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Discover your next favorite read from our curated collection of over 10,000 books. 
-              From timeless classics to contemporary bestsellers, we bring stories that inspire, 
-              educate, and entertain.
+              Discover your next favorite read from our curated collection of
+              over 10,000 books. From timeless classics to contemporary
+              bestsellers, we bring stories that inspire, educate, and
+              entertain.
             </motion.p>
 
             {/* Features */}
@@ -130,12 +206,17 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              {['Free Delivery', 'Secure Payment', '24/7 Support'].map((feature, index) => (
-                <div key={index} className="flex items-center gap-2 text-gray-600">
-                  <div className="w-2 h-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></div>
-                  <span className="text-sm font-medium">{feature}</span>
-                </div>
-              ))}
+              {["Free Delivery", "Secure Payment", "24/7 Support"].map(
+                (feature, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-2 text-gray-600"
+                  >
+                    <div className="w-2 h-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></div>
+                    <span className="text-sm font-medium">{feature}</span>
+                  </div>
+                )
+              )}
             </motion.div>
 
             {/* CTA Buttons */}
@@ -149,15 +230,17 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg shadow-lg hover:from-purple-700 hover:to-blue-700 font-semibold flex items-center gap-2 justify-center group"
+                onClick={() => navigate("/all-products")}
               >
                 Explore Collection
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </motion.button>
-              
+
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-colors flex items-center gap-2 justify-center"
+                onClick={() => navigate("/all-products")}
               >
                 <TrendingUp className="w-5 h-5" />
                 Trending Now
@@ -184,71 +267,142 @@ const Hero = () => {
               </div>
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  <Star
+                    key={i}
+                    className="w-5 h-5 fill-yellow-400 text-yellow-400"
+                  />
                 ))}
                 <span className="text-sm text-gray-600 ml-2">4.9/5 Rating</span>
               </div>
             </motion.div>
           </motion.div>
 
-          {/* Image Section */}
+          {/* Book Slider Section */}
           <motion.div
             className="w-full lg:w-1/2 relative"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
           >
-            <div className="relative">
-              {/* Floating Book Elements */}
-              {floatingBooks.map((book, index) => (
-                <motion.div
-                  key={index}
-                  className={`absolute w-20 h-28 bg-gradient-to-r ${
-                    index === 0 ? 'from-purple-400 to-blue-400' :
-                    index === 1 ? 'from-orange-400 to-red-400' :
-                    'from-green-400 to-teal-400'
-                  } rounded-lg shadow-lg ${
-                    currentBook === index ? 'opacity-100' : 'opacity-40'
-                  }`}
-                  style={{
-                    top: `${book.y}%`,
-                    left: `${book.x}%`,
-                    transform: `rotate(${book.rotate}deg)`,
-                  }}
-                  animate={{
-                    y: currentBook === index ? [0, -10, 0] : 0,
-                    scale: currentBook === index ? 1.1 : 1,
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
+            <div className="relative max-w-lg mx-auto">
+              {/* Slider Container */}
+              <div className="relative h-[500px] overflow-hidden rounded-2xl">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide}
+                    initial={{ opacity: 0, x: 300 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -300 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0"
+                  >
+                    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden h-full">
+                      {/* Book Image */}
+                      <div className="relative h-64 bg-gradient-to-br from-purple-100 to-blue-100">
+                        <img
+                          src={featuredBooks[currentSlide].image}
+                          alt={featuredBooks[currentSlide].title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
 
-              {/* Main Hero Image */}
-              <motion.img
-                src="hero.png"
-                alt="BookShopBD Hero"
-                className="relative z-10 w-full max-w-lg mx-auto drop-shadow-2xl"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              />
+                        {/* Badge */}
+                        <div className="absolute top-4 left-4 px-3 py-1 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold rounded-full shadow-lg">
+                          {featuredBooks[currentSlide].badge}
+                        </div>
 
-              {/* Decorative Circle */}
-              <motion.div
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-purple-200 to-blue-200 rounded-full -z-10 opacity-30"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
+                        {/* Wishlist */}
+                        <button className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                          <Heart className="w-5 h-5 text-gray-600 hover:text-red-500 transition-colors" />
+                        </button>
+                      </div>
+
+                      {/* Book Details */}
+                      <div className="p-6 space-y-4">
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-900">
+                            {featuredBooks[currentSlide].title}
+                          </h3>
+                          <p className="text-gray-600">
+                            by {featuredBooks[currentSlide].author}
+                          </p>
+                        </div>
+
+                        <p className="text-gray-700 text-sm leading-relaxed">
+                          {featuredBooks[currentSlide].description}
+                        </p>
+
+                        {/* Rating */}
+                        <div className="flex items-center gap-2">
+                          <div className="flex">
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                className={`w-4 h-4 ${
+                                  i <
+                                  Math.floor(featuredBooks[currentSlide].rating)
+                                    ? "fill-yellow-400 text-yellow-400"
+                                    : "text-gray-300"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-sm text-gray-600">
+                            {featuredBooks[currentSlide].rating} (
+                            {featuredBooks[currentSlide].reviews} reviews)
+                          </span>
+                        </div>
+
+                        {/* Price */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                              ${featuredBooks[currentSlide].price}
+                            </span>
+                            <span className="text-lg text-gray-400 line-through">
+                              ${featuredBooks[currentSlide].oldPrice}
+                            </span>
+                          </div>
+                          <button
+                            className="px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105"
+                            onClick={() => navigate("/all-products")}
+                          >
+                            View Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+              >
+                <ChevronLeft className="w-6 h-6 text-gray-700" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+              >
+                <ChevronRight className="w-6 h-6 text-gray-700" />
+              </button>
+
+              {/* Dots Indicator */}
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2">
+                {featuredBooks.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      currentSlide === index
+                        ? "w-8 bg-gradient-to-r from-purple-600 to-blue-600"
+                        : "bg-gray-300 hover:bg-gray-400"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
