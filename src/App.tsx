@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Footer from './components/shared-component/Footer';
 import { ProductDetails } from './pages/ProductDetails';
 import Navbar from './components/shared-component/Navbar';
+import ScrollToTop from './components/shared-component/ScrollToTop';
 
 interface CartItem {
   id: number;
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Navbar cart={cart} />
       <Routes>
         <Route path="/" element={<Home />} />

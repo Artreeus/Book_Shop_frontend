@@ -17,11 +17,10 @@ import {
   Building,
   Hash,
   ArrowLeft,
-  Tag,
   Package,
 } from "lucide-react";
 import { toast } from "react-toastify";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Book {
   _id: string;
@@ -67,7 +66,7 @@ const Checkout = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const book = location.state?.book as Book;

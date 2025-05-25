@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ShoppingCart, AlertCircle, ArrowLeft, Star, Heart, Shield, Truck, RefreshCw, Check, Minus, Plus, BookOpen, Award, Clock } from "lucide-react";
+import { ShoppingCart, AlertCircle, ArrowLeft, Star, Heart, Shield, Truck, RefreshCw, Check, Minus, Plus, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import Loader from "../components/shared-component/Loader";
 

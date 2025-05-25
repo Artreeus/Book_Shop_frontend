@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BookOpen, Search, Filter, X, Star, Heart, ShoppingCart, Grid, List, SlidersHorizontal } from "lucide-react";
+import { BookOpen, Search, X, Star, Heart, ShoppingCart, Grid, List, SlidersHorizontal } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
