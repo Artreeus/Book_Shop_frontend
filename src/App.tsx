@@ -44,7 +44,7 @@ function App() {
         <Route path="/all-products" element={<Products />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route path="/about" element={<AboutUs />} />
-        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="/blogs" element={<BlogsPage />} />
         {/* <Route path="/blog/:id" element={<BlogPost />} /> */}
         <Route path="/checkout" element={<Checkout />} />

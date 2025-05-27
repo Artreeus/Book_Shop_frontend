@@ -41,21 +41,19 @@ const Navbar = ({ cart }: NavbarProps) => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (isMobileMenuOpen && !target.closest('.mobile-menu-container')) {
+      // Check if click is outside mobile menu and menu button
+      if (isMobileMenuOpen && 
+          !target.closest('.mobile-menu-container') && 
+          !target.closest('.mobile-menu-dropdown')) {
         setIsMobileMenuOpen(false);
       }
     };
 
     if (isMobileMenuOpen) {
       document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
     }
-    return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, []);
 
   // Close cart when mobile menu opens
   useEffect(() => {
@@ -63,6 +61,19 @@ const Navbar = ({ cart }: NavbarProps) => {
       setIsCartOpen(false);
     }
   }, [isMobileMenuOpen]);
+
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+        setIsCartOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => document.removeEventListener('keydown', handleEscapeKey);
+  }, []);
 
   return (
     <>
@@ -282,8 +293,13 @@ const Navbar = ({ cart }: NavbarProps) => {
               
               {/* Menu Toggle for tablet */}
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                }}
                 className="mobile-menu-container p-2 rounded-lg text-[#393280] hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 focus:outline-none transition-all duration-200"
+                aria-label="Toggle navigation menu"
+                aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6 transition-transform duration-200" />
@@ -307,8 +323,13 @@ const Navbar = ({ cart }: NavbarProps) => {
               
               {/* Menu Toggle */}
               <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                }}
                 className="mobile-menu-container p-2 rounded-lg text-[#393280] hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 focus:outline-none transition-all duration-200"
+                aria-label="Toggle navigation menu"
+                aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? (
                   <X className="h-5 w-5 sm:h-6 sm:w-6 transition-transform duration-200" />

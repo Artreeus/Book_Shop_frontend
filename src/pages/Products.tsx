@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { BookOpen, Search, X, Star, Heart, ShoppingCart, Grid, List, SlidersHorizontal } from "lucide-react";
+import {
+  BookOpen,
+  Search,
+  X,
+  Star,
+  Heart,
+  ShoppingCart,
+  Grid,
+  List,
+  SlidersHorizontal,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -120,9 +130,9 @@ const Products: React.FC = () => {
   };
 
   const toggleWishlist = (bookId: string) => {
-    setWishlist(prev => 
-      prev.includes(bookId) 
-        ? prev.filter(id => id !== bookId)
+    setWishlist((prev) =>
+      prev.includes(bookId)
+        ? prev.filter((id) => id !== bookId)
         : [...prev, bookId]
     );
   };
@@ -144,7 +154,7 @@ const Products: React.FC = () => {
 
       <div className="relative z-10 container mx-auto px-5 py-16">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -164,7 +174,7 @@ const Products: React.FC = () => {
         </motion.div>
 
         {/* Search and Controls Bar */}
-        <motion.div 
+        <motion.div
           className="bg-white rounded-2xl shadow-lg p-6 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -184,19 +194,21 @@ const Products: React.FC = () => {
             </div>
 
             {/* Controls */}
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+              {/* Filters Button */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-200 flex items-center gap-2"
+                className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-200 flex items-center justify-center sm:justify-start gap-2"
               >
                 <SlidersHorizontal className="w-5 h-5" />
                 Filters
               </button>
 
+              {/* Sort Dropdown */}
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500"
+                className="w-full sm:w-auto px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -204,7 +216,8 @@ const Products: React.FC = () => {
                 <option value="name">Name: A to Z</option>
               </select>
 
-              <div className="flex bg-gray-100 rounded-lg p-1">
+              {/* View Mode Toggle */}
+              <div className="w-full sm:w-auto flex justify-center sm:justify-start bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode("grid")}
                   className={`p-2 rounded ${viewMode === "grid" ? "bg-white shadow-sm" : ""}`}
@@ -274,7 +287,12 @@ const Products: React.FC = () => {
                         min="0"
                         max="300"
                         value={priceRange[1]}
-                        onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+                        onChange={(e) =>
+                          setPriceRange([
+                            priceRange[0],
+                            parseInt(e.target.value),
+                          ])
+                        }
                         className="w-full accent-purple-600"
                       />
                     </div>
@@ -321,24 +339,35 @@ const Products: React.FC = () => {
                   {/* Active Filters */}
                   {(selectedAuthor || selectedCategory || search) && (
                     <div className="pt-4 border-t border-gray-200">
-                      <p className="text-sm font-semibold text-gray-700 mb-2">Active Filters:</p>
+                      <p className="text-sm font-semibold text-gray-700 mb-2">
+                        Active Filters:
+                      </p>
                       <div className="flex flex-wrap gap-2">
                         {search && (
                           <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm flex items-center gap-1">
                             "{search}"
-                            <X className="w-3 h-3 cursor-pointer" onClick={() => setSearch("")} />
+                            <X
+                              className="w-3 h-3 cursor-pointer"
+                              onClick={() => setSearch("")}
+                            />
                           </span>
                         )}
                         {selectedAuthor && (
                           <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm flex items-center gap-1">
                             {selectedAuthor}
-                            <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedAuthor("")} />
+                            <X
+                              className="w-3 h-3 cursor-pointer"
+                              onClick={() => setSelectedAuthor("")}
+                            />
                           </span>
                         )}
                         {selectedCategory && (
                           <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm flex items-center gap-1">
                             {selectedCategory}
-                            <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedCategory("")} />
+                            <X
+                              className="w-3 h-3 cursor-pointer"
+                              onClick={() => setSelectedCategory("")}
+                            />
                           </span>
                         )}
                       </div>
@@ -364,13 +393,15 @@ const Products: React.FC = () => {
                 </div>
 
                 {filteredBooks.length === 0 ? (
-                  <motion.div 
+                  <motion.div
                     className="text-center py-16"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
                     <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                    <p className="text-xl text-gray-600">No books found matching your criteria.</p>
+                    <p className="text-xl text-gray-600">
+                      No books found matching your criteria.
+                    </p>
                     <button
                       onClick={clearFilters}
                       className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700"
@@ -379,8 +410,12 @@ const Products: React.FC = () => {
                     </button>
                   </motion.div>
                 ) : (
-                  <motion.div 
-                    className={viewMode === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}
+                  <motion.div
+                    className={
+                      viewMode === "grid"
+                        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                        : "space-y-4"
+                    }
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
@@ -396,7 +431,11 @@ const Products: React.FC = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.05 }}
-                          className={viewMode === "grid" ? "" : "flex gap-6 bg-white rounded-xl shadow-lg p-6"}
+                          className={
+                            viewMode === "grid"
+                              ? ""
+                              : "flex gap-6 bg-white rounded-xl shadow-lg p-6"
+                          }
                         >
                           {viewMode === "grid" ? (
                             // Grid View
@@ -408,27 +447,29 @@ const Products: React.FC = () => {
                                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                
+
                                 <button
                                   onClick={() => toggleWishlist(book._id)}
                                   className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                                 >
                                   <Heart
                                     className={`w-5 h-5 transition-colors duration-300 ${
-                                      isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'
+                                      isWishlisted
+                                        ? "fill-red-500 text-red-500"
+                                        : "text-gray-600"
                                     }`}
                                   />
                                 </button>
-
-                                
                               </div>
 
                               <div className="p-6">
                                 <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1">
                                   {book.title}
                                 </h3>
-                                <p className="text-sm text-gray-600 mb-3">by {book.author}</p>
-                                
+                                <p className="text-sm text-gray-600 mb-3">
+                                  by {book.author}
+                                </p>
+
                                 <div className="flex items-center gap-2 mb-3">
                                   <div className="flex items-center">
                                     {[...Array(5)].map((_, i) => (
@@ -436,13 +477,15 @@ const Products: React.FC = () => {
                                         key={i}
                                         className={`w-4 h-4 ${
                                           i < Math.floor(Number(rating))
-                                            ? 'fill-yellow-400 text-yellow-400'
-                                            : 'text-gray-300'
+                                            ? "fill-yellow-400 text-yellow-400"
+                                            : "text-gray-300"
                                         }`}
                                       />
                                     ))}
                                   </div>
-                                  <span className="text-sm text-gray-600">({reviews})</span>
+                                  <span className="text-sm text-gray-600">
+                                    ({reviews})
+                                  </span>
                                 </div>
 
                                 <div className="flex items-center justify-between">
@@ -467,10 +510,16 @@ const Products: React.FC = () => {
                                 className="w-32 h-48 object-cover rounded-lg"
                               />
                               <div className="flex-1">
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">{book.title}</h3>
-                                <p className="text-gray-600 mb-1">by {book.author}</p>
-                                <p className="text-sm text-gray-500 mb-3">Category: {book.category}</p>
-                                
+                                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                  {book.title}
+                                </h3>
+                                <p className="text-gray-600 mb-1">
+                                  by {book.author}
+                                </p>
+                                <p className="text-sm text-gray-500 mb-3">
+                                  Category: {book.category}
+                                </p>
+
                                 <div className="flex items-center gap-2 mb-3">
                                   <div className="flex items-center">
                                     {[...Array(5)].map((_, i) => (
@@ -478,13 +527,15 @@ const Products: React.FC = () => {
                                         key={i}
                                         className={`w-4 h-4 ${
                                           i < Math.floor(Number(rating))
-                                            ? 'fill-yellow-400 text-yellow-400'
-                                            : 'text-gray-300'
+                                            ? "fill-yellow-400 text-yellow-400"
+                                            : "text-gray-300"
                                         }`}
                                       />
                                     ))}
                                   </div>
-                                  <span className="text-sm text-gray-600">{rating} ({reviews} reviews)</span>
+                                  <span className="text-sm text-gray-600">
+                                    {rating} ({reviews} reviews)
+                                  </span>
                                 </div>
 
                                 <div className="flex items-center justify-between">
@@ -498,7 +549,9 @@ const Products: React.FC = () => {
                                     >
                                       <Heart
                                         className={`w-5 h-5 ${
-                                          isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'
+                                          isWishlisted
+                                            ? "fill-red-500 text-red-500"
+                                            : "text-gray-600"
                                         }`}
                                       />
                                     </button>
@@ -527,8 +580,6 @@ const Products: React.FC = () => {
           </div>
         </div>
       </div>
-
-     
     </div>
   );
 };
