@@ -1,190 +1,278 @@
-import { BookOpen, Users, Award, Clock, MapPin, PhoneCall, Mail, BookMarked, GraduationCap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { 
+  BookOpen, Users, Target, Heart, Award, 
+  Calendar, Sparkles
+} from 'lucide-react';
 
-export default function AboutUs() {
+const AboutUs = () => {
+  const stats = [
+    { value: '50K+', label: 'Happy Customers', icon: Users },
+    { value: '10K+', label: 'Books Available', icon: BookOpen },
+    { value: '7+', label: 'Years of Service', icon: Calendar },
+    { value: '99%', label: 'Customer Satisfaction', icon: Heart }
+  ];
+
+  const team = [
+    {
+      name: 'Ahmed Rahman',
+      role: 'Founder & CEO',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400',
+      bio: 'Passionate about bringing the joy of reading to everyone in Bangladesh.'
+    },
+    {
+      name: 'Fatima Khatun',
+      role: 'Head of Operations',
+      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400',
+      bio: 'Ensuring smooth delivery and excellent customer service since day one.'
+    },
+    {
+      name: 'Karim Ali',
+      role: 'Head of Curation',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',
+      bio: 'Handpicking the best books from around the world for our readers.'
+    }
+  ];
+
+  const milestones = [
+    { year: '2017', event: 'BookShopBD was founded with just 100 books' },
+    { year: '2019', event: 'Reached 10,000 customers milestone' },
+    { year: '2021', event: 'Launched our mobile app and e-book collection' },
+    { year: '2023', event: 'Expanded to all 64 districts of Bangladesh' },
+    { year: '2024', event: 'Introduced same-day delivery in major cities' }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
       {/* Hero Section */}
-      <section className="relative h-[400px] hero3 flex justify-center items-center overflow-hidden">
+      <section className="relative overflow-hidden pt-20 pb-32">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+        </div>
 
-        <div className="">
-          <div className="max-w-7xl mx-auto h-full flex flex-col justify-center px-4 sm:px-6 lg:px-8 items-center">
-            <h1 className="text-[70px] font-bold text-[#393280] mb-4">Our Story</h1>
-            <p className="text-[18px] text-gray-500 max-w-2xl text-center">
-              For over two decades, we've been more than just a bookstore - we're a sanctuary for book lovers, 
-              a community hub for intellectuals, and a gateway to countless adventures through literature.
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center max-w-4xl mx-auto"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-full mb-6">
+              <Sparkles className="w-5 h-5 text-purple-600" />
+              <span className="text-purple-800 font-semibold">About BookShopBD</span>
+            </div>
+            
+            <h1 className="text-6xl font-bold mb-6">
+              Your Gateway to
+              <span className="block bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Infinite Stories
+              </span>
+            </h1>
+            
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Since 2017, we've been on a mission to make quality books accessible to every 
+              reader in Bangladesh. From classics to contemporary, fiction to philosophy, 
+              we bring the world's best literature to your doorstep.
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-white relative">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full mb-4">
+                  <stat.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-4xl font-bold text-gray-900 mb-2">{stat.value}</h3>
+                <p className="text-gray-600">{stat.label}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Mission Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-[#393280] mb-6">Our Mission</h2>
-              <p className="text-gray-600 mb-6">
-                We believe in the transformative power of reading. Our mission is to cultivate a love for literature,
-                foster intellectual curiosity, and create a welcoming space where stories come alive.
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-2">
-                  <BookMarked className="w-5 h-5 text-[#ED553B]" />
-                  <span className="text-gray-700">50K+ Books</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-[#ED553B]" />
-                  <span className="text-gray-700">20K+ Members</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Award className="w-5 h-5 text-[#ED553B]" />
-                  <span className="text-gray-700">Award Winning</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-[#ED553B]" />
-                  <span className="text-gray-700">Since 2000</span>
-                </div>
+      {/* Mission & Vision */}
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-white rounded-3xl shadow-xl p-8 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-purple-100 rounded-full -mr-16 -mt-16"></div>
+                <Target className="w-12 h-12 text-purple-600 mb-4 relative z-10" />
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Mission</h2>
+                <p className="text-gray-600 leading-relaxed">
+                  To ignite the love of reading across Bangladesh by providing easy access to 
+                  diverse, quality books at affordable prices. We believe every person deserves 
+                  the opportunity to explore new worlds through literature.
+                </p>
               </div>
-            </div>
-            <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80" 
-                alt="Books on shelves" 
-                className="rounded-lg shadow-xl"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-[#ED553B] p-4 rounded-lg shadow-lg">
-                <p className="text-white font-bold text-xl">23+ Years</p>
-                <p className="text-white/90">of Literary Excellence</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl shadow-xl p-8 text-white relative overflow-hidden">
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
+                <Award className="w-12 h-12 mb-4 relative z-10" />
+                <h2 className="text-3xl font-bold mb-4">Our Vision</h2>
+                <p className="leading-relaxed">
+                  To become Bangladesh's most trusted and beloved bookstore, fostering a 
+                  nation of readers and thinkers. We envision a future where every home 
+                  has a library and every heart has a favorite book.
+                </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-16 hero2 ">
-        <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-[#393280] mb-12">Our Core Values</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <BookOpen className="w-8 h-8 text-[#ED553B]" />,
-                title: "Literary Excellence",
-                description: "Curating the finest collection of books across all genres and maintaining high standards in literary quality."
-              },
-              {
-                icon: <Users className="w-8 h-8 text-[#ED553B]" />,
-                title: "Community First",
-                description: "Building and nurturing a vibrant community of readers, writers, and literary enthusiasts."
-              },
-              {
-                icon: <GraduationCap className="w-8 h-8 text-[#ED553B]" />,
-                title: "Continuous Learning",
-                description: "Promoting lifelong learning through books, workshops, and educational programs."
-              }
-            ].map((value, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <div className="mb-4">{value.icon}</div>
-                <h3 className="text-xl font-bold text-[#393280] mb-2">{value.title}</h3>
-                <p className="text-gray-600">{value.description}</p>
-              </div>
+      {/* Timeline */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Journey</h2>
+            <p className="text-xl text-gray-600">From humble beginnings to nationwide service</p>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto">
+            {milestones.map((milestone, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className={`flex items-center gap-8 mb-12 ${
+                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                }`}
+              >
+                <div className="flex-1 text-right">
+                  {index % 2 === 0 && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-purple-600 mb-2">{milestone.year}</h3>
+                      <p className="text-gray-600">{milestone.event}</p>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="relative">
+                  <div className="w-4 h-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></div>
+                  {index < milestones.length - 1 && (
+                    <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-0.5 h-20 bg-gray-300"></div>
+                  )}
+                </div>
+                
+                <div className="flex-1">
+                  {index % 2 !== 0 && (
+                    <div>
+                      <h3 className="text-2xl font-bold text-purple-600 mb-2">{milestone.year}</h3>
+                      <p className="text-gray-600">{milestone.event}</p>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Team Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-[#393280] mb-12">Meet Our Team</h2>
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              {
-                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80",
-                name: "Sarah Johnson",
-                role: "Founder & CEO"
-              },
-              {
-                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80",
-                name: "David Chen",
-                role: "Head Curator"
-              },
-              {
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80",
-                name: "Emily Rodriguez",
-                role: "Community Manager"
-              },
-              {
-                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80",
-                name: "Michael Kim",
-                role: "Events Director"
-              }
-            ].map((member, index) => (
-              <div key={index} className="text-center">
-                <div className="relative mb-4 group">
-                  <div className="aspect-square overflow-hidden rounded-lg">
-                    <img 
-                      src={member.image} 
-                      alt={member.name} 
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-[#393280]/0 group-hover:bg-[#393280]/20 transition-colors duration-300 rounded-lg" />
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
+            <p className="text-xl text-gray-600">The passionate people behind BookShopBD</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {team.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-2xl transition-shadow duration-300"
+              >
+                <div className="h-64 overflow-hidden">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
-                <h3 className="text-xl font-bold text-[#393280]">{member.name}</h3>
-                <p className="text-[#ED553B]">{member.role}</p>
-              </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                  <p className="text-purple-600 font-medium mb-3">{member.role}</p>
+                  <p className="text-gray-600">{member.bio}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-16 hero3 px-5 mb-7">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-[#393280] mb-6">Visit Our Store</h2>
-              <p className="text-[#393280] mb-8">
-                We'd love to help you discover your next favorite book. Visit us at our store
-                or reach out through any of our contact channels.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 text-white">
-                  <MapPin className="w-5 h-5 text-[#ED553B]" />
-                  <span className='text-[#393280]' >123 Bookworm Lane, Literary District, LT 12345</span>
-                </div>
-                <div className="flex items-center gap-3 text-white">
-                  <PhoneCall className="w-5 h-5 text-[#ED553B]" />
-                  <span className='text-[#393280]'>+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center gap-3 text-white">
-                  <Mail className="w-5 h-5 text-[#ED553B]" />
-                  <span className='text-[#393280]'>hello@chapterandverse.com</span>
-                </div>
-              </div>
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
+        <div className="container mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold mb-4">Join Our Reading Community</h2>
+            <p className="text-xl mb-8 opacity-90">
+              Start your literary journey with us today
+            </p>
+            <div className="flex gap-4 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-white text-purple-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              >
+                Browse Books
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-transparent border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition-colors"
+              >
+                Contact Us
+              </motion.button>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <img 
-                src="https://images.unsplash.com/photo-1529148482759-b35b25c5f217?auto=format&fit=crop&q=80" 
-                alt="Store interior" 
-                className="w-full h-[300px] object-cover rounded-lg"
-              />
-              <div className="mt-4">
-                <h3 className="text-xl font-bold text-[#393280] mb-2">Opening Hours</h3>
-                <div className="grid grid-cols-2 gap-2 text-gray-600">
-                  <span>Monday - Friday</span>
-                  <span>9:00 AM - 9:00 PM</span>
-                  <span>Saturday</span>
-                  <span>10:00 AM - 8:00 PM</span>
-                  <span>Sunday</span>
-                  <span>11:00 AM - 6:00 PM</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
+
+      
+     
     </div>
   );
-}
+};
+
+export default AboutUs;

@@ -12,6 +12,8 @@ import Footer from './components/shared-component/Footer';
 import { ProductDetails } from './pages/ProductDetails';
 import Navbar from './components/shared-component/Navbar';
 import ScrollToTop from './components/shared-component/ScrollToTop';
+import ContactUs from './pages/ContactUs';
+import BlogsPage from './pages/BlogsPage';
 
 interface CartItem {
   id: number;
@@ -42,6 +44,9 @@ function App() {
         <Route path="/all-products" element={<Products />} />
         <Route path="/product-details/:id" element={<ProductDetails />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/blogs" element={<BlogsPage />} />
+        {/* <Route path="/blog/:id" element={<BlogPost />} /> */}
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />

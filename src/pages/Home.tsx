@@ -3,6 +3,7 @@ import FeaturedBook from "../components/FeaturedBook";
 import ProductCard from "../components/ProductCard";
 import Blog from "../components/Blog";
 import ContactUs from "../components/shared-component/ContactUs";
+import HomePageSections from "../components/MoreSections";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <ProductCard />
       <FeaturedBook />
       <Blog />
+      <HomePageSections/>
       <ContactUs />
     </div>
   );

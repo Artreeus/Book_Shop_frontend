@@ -1,4 +1,16 @@
-import { Facebook, Linkedin, Twitter, Youtube, Mail, Phone, MapPin, Calendar, ArrowRight, BookOpen, Sparkles } from "lucide-react";
+import {
+  Facebook,
+  Linkedin,
+  Twitter,
+  Youtube,
+  Mail,
+  Phone,
+  MapPin,
+  Calendar,
+  ArrowRight,
+  BookOpen,
+  Sparkles,
+} from "lucide-react";
 import { useState } from "react";
 
 const Footer = () => {
@@ -28,21 +40,30 @@ const Footer = () => {
       <div className="relative z-10">
         {/* Newsletter Section */}
         <div className="border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-6 md:px-8 py-12">
-            <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-lg rounded-2xl p-8 md:p-12 transform hover:scale-[1.02] transition-all duration-300">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
+            <div className="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-lg rounded-2xl p-6 sm:p-8 md:p-12 transform hover:scale-[1.02] transition-all duration-300">
+              <div className="grid gap-8 md:grid-cols-2 items-center">
+                {/* Left Side */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="p-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg animate-pulse">
                       <Mail className="w-6 h-6" />
                     </div>
-                    <h3 className="text-2xl font-bold">Subscribe to Our Newsletter</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold">
+                      Subscribe to Our Newsletter
+                    </h3>
                   </div>
-                  <p className="text-gray-300">
-                    Get the latest updates on new books, exclusive offers, and literary events!
+                  <p className="text-gray-300 text-sm sm:text-base">
+                    Get the latest updates on new books, exclusive offers, and
+                    literary events!
                   </p>
                 </div>
-                <form onSubmit={handleSubscribe} className="flex gap-3">
+
+                {/* Right Side - Form */}
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
                   <input
                     type="email"
                     value={email}
@@ -54,7 +75,7 @@ const Footer = () => {
                   <button
                     type="submit"
                     disabled={isSubscribing}
-                    className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubscribing ? (
                       <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -84,15 +105,16 @@ const Footer = () => {
                 />
               </div>
               <p className="text-gray-300 leading-relaxed">
-                BookShopBd is Bangladesh's premier bookstore offering a vast collection of books and ebooks. 
-                Discover your next favorite read with us!
+                BookShopBd is Bangladesh's premier bookstore offering a vast
+                collection of books and ebooks. Discover your next favorite read
+                with us!
               </p>
               <div className="flex space-x-3">
                 {[
                   { Icon: Facebook, color: "hover:bg-blue-600" },
                   { Icon: Linkedin, color: "hover:bg-blue-700" },
                   { Icon: Twitter, color: "hover:bg-sky-500" },
-                  { Icon: Youtube, color: "hover:bg-red-600" }
+                  { Icon: Youtube, color: "hover:bg-red-600" },
                 ].map(({ Icon, color }, index) => (
                   <a
                     key={index}
@@ -119,7 +141,7 @@ const Footer = () => {
                   "E-Books",
                   "New Releases",
                   "Best Sellers",
-                  "Contact"
+                  "Contact",
                 ].map((item) => (
                   <li key={item}>
                     <a
@@ -147,16 +169,18 @@ const Footer = () => {
                   {
                     title: "Summer Reading Festival 2025",
                     date: "15 May 2025",
-                    description: "Join us for exclusive discounts and author meet-ups"
+                    description:
+                      "Join us for exclusive discounts and author meet-ups",
                   },
                   {
                     title: "New Mystery Collection Launch",
                     date: "10 May 2025",
-                    description: "Discover thrilling new titles from bestselling authors"
-                  }
+                    description:
+                      "Discover thrilling new titles from bestselling authors",
+                  },
                 ].map((news, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="group cursor-pointer transform transition-all duration-300 hover:translate-x-2"
                   >
                     <div className="flex items-start gap-3">
@@ -209,12 +233,14 @@ const Footer = () => {
                   <p className="text-gray-300">info@bookshopbd.com</p>
                 </div>
               </div>
-              
+
               {/* Special Badge */}
               <div className="mt-6 p-4 bg-gradient-to-r from-orange-500/10 to-red-500/10 backdrop-blur-lg rounded-lg border border-orange-500/20">
                 <div className="flex items-center gap-2 text-orange-400">
                   <Sparkles className="w-5 h-5" />
-                  <span className="text-sm font-semibold">Open 7 Days a Week!</span>
+                  <span className="text-sm font-semibold">
+                    Open 7 Days a Week!
+                  </span>
                 </div>
               </div>
             </div>
@@ -228,28 +254,30 @@ const Footer = () => {
               <div className="flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-orange-400" />
                 <p className="text-gray-400 text-sm">
-                  © 2025 <span className="text-white font-semibold">BookShopBd.</span> All Rights Reserved.
+                  © 2025{" "}
+                  <span className="text-white font-semibold">BookShopBd.</span>{" "}
+                  All Rights Reserved.
                 </p>
               </div>
               <div className="flex items-center gap-6">
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="text-gray-400 hover:text-white text-sm transition-colors duration-200 flex items-center gap-1 group"
                 >
                   Privacy Policy
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </a>
                 <span className="text-gray-600">•</span>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="text-gray-400 hover:text-white text-sm transition-colors duration-200 flex items-center gap-1 group"
                 >
                   Terms of Service
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </a>
                 <span className="text-gray-600">•</span>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="text-gray-400 hover:text-white text-sm transition-colors duration-200 flex items-center gap-1 group"
                 >
                   Sitemap
@@ -260,8 +288,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      
     </footer>
   );
 };
