@@ -42,18 +42,10 @@ export function ProductDetails() {
   const mockReviews: Review[] = [
     {
       id: 1,
-      name: "Sarah Johnson",
+      name: "No reviews Yet Published",
       rating: 5,
       date: "2 weeks ago",
       comment: "Absolutely loved this book! The storytelling is captivating and I couldn't put it down.",
-      verified: true
-    },
-    {
-      id: 2,
-      name: "Michael Chen",
-      rating: 4,
-      date: "1 month ago",
-      comment: "Great read with interesting characters. Would definitely recommend to others.",
       verified: true
     }
   ];
@@ -258,7 +250,7 @@ export function ProductDetails() {
                       ))}
                       <span className="ml-2 text-lg font-semibold">{rating}</span>
                     </div>
-                    <span className="text-gray-500">({totalReviews} reviews)</span>
+                
                   </div>
                 </motion.div>
 
@@ -312,14 +304,7 @@ export function ProductDetails() {
                           <p className="text-sm text-gray-500">Language</p>
                           <p className="font-semibold">English</p>
                         </div>
-                        <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-500">Pages</p>
-                          <p className="font-semibold">342</p>
-                        </div>
-                        <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-500">ISBN</p>
-                          <p className="font-semibold">978-1234567890</p>
-                        </div>
+                       
                       </div>
                     </div>
                   )}
@@ -332,31 +317,12 @@ export function ProductDetails() {
                             <div>
                               <div className="flex items-center gap-2">
                                 <h4 className="font-semibold">{review.name}</h4>
-                                {review.verified && (
-                                  <span className="flex items-center gap-1 text-xs text-green-600">
-                                    <Check className="w-3 h-3" />
-                                    Verified Purchase
-                                  </span>
-                                )}
+                               
                               </div>
-                              <div className="flex items-center gap-2 mt-1">
-                                <div className="flex">
-                                  {[...Array(5)].map((_, i) => (
-                                    <Star
-                                      key={i}
-                                      className={`w-4 h-4 ${
-                                        i < review.rating
-                                          ? 'fill-yellow-400 text-yellow-400'
-                                          : 'text-gray-300'
-                                      }`}
-                                    />
-                                  ))}
-                                </div>
-                                <span className="text-sm text-gray-500">{review.date}</span>
-                              </div>
+                              
                             </div>
                           </div>
-                          <p className="text-gray-600">{review.comment}</p>
+                          
                         </div>
                       ))}
                     </div>
@@ -456,27 +422,8 @@ export function ProductDetails() {
             </div>
           </motion.div>
 
-          {/* Related Products Section */}
-          <motion.div 
-            className="mt-16"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">You May Also Like</h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map((item) => (
-                <div key={item} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="h-48 bg-gradient-to-br from-purple-100 to-blue-100"></div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-1">Related Book {item}</h3>
-                    <p className="text-sm text-gray-600 mb-2">Author Name</p>
-                    <p className="text-lg font-bold text-purple-600">$24.99</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+          
+       
         </div>
       </div>
 

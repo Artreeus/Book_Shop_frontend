@@ -41,6 +41,10 @@ export function BookList() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+
   const fetchBooks = async () => {
     try {
       const response = await fetch(
@@ -159,6 +163,7 @@ export function BookList() {
     }
   };
 
+  // Filter books based on search
   const filteredBooks = books.filter(
     (book) =>
       book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -166,6 +171,7 @@ export function BookList() {
       book.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Sort filtered books
   const sortedBooks = [...filteredBooks].sort((a, b) => {
     if (!sortField) return 0;
     const aValue = a[sortField];
@@ -183,6 +189,23 @@ export function BookList() {
     
     return 0;
   });
+
+  // Pagination calculations
+  const totalPages = Math.ceil(sortedBooks.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentBooks = sortedBooks.slice(startIndex, endIndex);
+
+  // Reset page to 1 if searchTerm changes and current page would be invalid
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, sortField, sortOrder]);
+
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber < 1) return;
+    if (pageNumber > totalPages) return;
+    setCurrentPage(pageNumber);
+  };
 
   if (loading) {
     return (
@@ -314,7 +337,7 @@ export function BookList() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {sortedBooks.map((book, index) => (
+                {currentBooks.map((book, index) => (
                   <motion.tr 
                     key={book._id}
                     className="hover:bg-gray-50 transition-colors"
@@ -389,6 +412,39 @@ export function BookList() {
             </table>
           </div>
         </motion.div>
+
+        {/* Pagination Controls */}
+        <div className="mt-6 flex justify-center items-center gap-3 text-gray-700 select-none">
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 disabled:opacity-50 disabled:cursor-not-allowed`}
+          >
+            Previous
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => goToPage(pageNum)}
+              className={`px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 ${
+                pageNum === currentPage
+                  ? "bg-purple-600 text-white border-purple-600"
+                  : ""
+              }`}
+            >
+              {pageNum}
+            </button>
+          ))}
+
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 disabled:opacity-50 disabled:cursor-not-allowed`}
+          >
+            Next
+          </button>
+        </div>
 
         {/* Edit Modal */}
         <AnimatePresence>
@@ -614,8 +670,6 @@ export function BookList() {
           )}
         </AnimatePresence>
       </div>
-
-      
     </div>
   );
 }

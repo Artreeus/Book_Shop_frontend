@@ -94,6 +94,10 @@ export function OrderDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [updating, setUpdating] = useState<string | null>(null);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
   const fetchData = async () => {
     const accessToken = getAccessToken();
     if (!accessToken) {
@@ -177,6 +181,25 @@ export function OrderDashboard() {
     fetchData();
   }, []);
 
+  // Pagination calculations
+  const totalPages = Math.ceil(orders.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = orders.slice(startIndex, endIndex);
+
+  // Reset to page 1 if orders data changes and current page exceeds total pages
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [orders, currentPage, totalPages]);
+
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber < 1) return;
+    if (pageNumber > totalPages) return;
+    setCurrentPage(pageNumber);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[400px]">
@@ -191,7 +214,9 @@ export function OrderDashboard() {
 
   return (
     <div className="container mx-auto p-6">
-        <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4"> <BookOpen className="w-12 h-12"/> Order Dashboard</h1>
+      <h1 className="text-[#393280] text-5xl py-6 flex items-center gap-4"> 
+        <BookOpen className="w-12 h-12" /> Order Dashboard
+      </h1>
 
       {error && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
@@ -278,7 +303,7 @@ export function OrderDashboard() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {orders.map((order) => (
+              {currentOrders.map((order) => (
                 <tr key={order._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {order._id.slice(-8)}
@@ -352,6 +377,37 @@ export function OrderDashboard() {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="mt-6 flex justify-center items-center gap-3 text-gray-700 select-none">
+        <button
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <button
+            key={pageNum}
+            onClick={() => goToPage(pageNum)}
+            className={`px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 ${
+              pageNum === currentPage ? "bg-purple-600 text-white border-purple-600" : ""
+            }`}
+          >
+            {pageNum}
+          </button>
+        ))}
+
+        <button
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
