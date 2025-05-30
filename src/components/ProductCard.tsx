@@ -232,9 +232,7 @@ const ProductCard: React.FC = () => {
                               />
                             ))}
                           </div>
-                          <span className="text-sm text-gray-600">
-                            {rating} ({randomReviews * 23} reviews)
-                          </span>
+                          
                         </div>
                         
                         {/* Price */}
@@ -274,7 +272,7 @@ const ProductCard: React.FC = () => {
                   onClick={handleViewAll}
                   className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg shadow-lg hover:from-purple-700 hover:to-blue-700 font-semibold transform transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center gap-2 mx-auto group"
                 >
-                  View All Products
+                  View All Books
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </motion.div>

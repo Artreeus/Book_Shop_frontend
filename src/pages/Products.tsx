@@ -38,6 +38,10 @@ const Products: React.FC = () => {
   const [sortBy, setSortBy] = useState("featured");
   const [wishlist, setWishlist] = useState<string[]>([]);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -72,6 +76,7 @@ const Products: React.FC = () => {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
   };
 
   const filterBooks = () => {
@@ -112,6 +117,10 @@ const Products: React.FC = () => {
     }
 
     setFilteredBooks(filtered);
+
+    // Reset current page if filtered results are fewer than current page start index
+    const maxPage = Math.ceil(filtered.length / itemsPerPage);
+    if (currentPage > maxPage) setCurrentPage(1);
   };
 
   const handlePriceRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,6 +128,7 @@ const Products: React.FC = () => {
     const newPriceRange = [...priceRange];
     newPriceRange[parseInt(e.target.name)] = value;
     setPriceRange(newPriceRange);
+    setCurrentPage(1); // Reset page on price change
   };
 
   const clearFilters = () => {
@@ -127,6 +137,7 @@ const Products: React.FC = () => {
     setSelectedAuthor("");
     setSelectedCategory("");
     setSortBy("featured");
+    setCurrentPage(1); // Reset to first page
   };
 
   const toggleWishlist = (bookId: string) => {
@@ -139,10 +150,23 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     filterBooks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, priceRange, selectedAuthor, selectedCategory, sortBy]);
 
   const generateRating = () => (Math.random() * 2 + 3).toFixed(1);
   const generateReviews = () => Math.floor(Math.random() * 1000 + 100);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentBooks = filteredBooks.slice(startIndex, endIndex);
+
+  const goToPage = (pageNumber: number) => {
+    if (pageNumber < 1) return;
+    if (pageNumber > totalPages) return;
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
@@ -220,13 +244,17 @@ const Products: React.FC = () => {
               <div className="w-full sm:w-auto flex justify-center sm:justify-start bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode("grid")}
-                  className={`p-2 rounded ${viewMode === "grid" ? "bg-white shadow-sm" : ""}`}
+                  className={`p-2 rounded ${
+                    viewMode === "grid" ? "bg-white shadow-sm" : ""
+                  }`}
                 >
                   <Grid className="w-5 h-5 text-gray-700" />
                 </button>
                 <button
                   onClick={() => setViewMode("list")}
-                  className={`p-2 rounded ${viewMode === "list" ? "bg-white shadow-sm" : ""}`}
+                  className={`p-2 rounded ${
+                    viewMode === "list" ? "bg-white shadow-sm" : ""
+                  }`}
                 >
                   <List className="w-5 h-5 text-gray-700" />
                 </button>
@@ -305,7 +333,10 @@ const Products: React.FC = () => {
                     </label>
                     <select
                       value={selectedAuthor}
-                      onChange={(e) => setSelectedAuthor(e.target.value)}
+                      onChange={(e) => {
+                        setSelectedAuthor(e.target.value);
+                        setCurrentPage(1);
+                      }}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Authors</option>
@@ -324,7 +355,10 @@ const Products: React.FC = () => {
                     </label>
                     <select
                       value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      onChange={(e) => {
+                        setSelectedCategory(e.target.value);
+                        setCurrentPage(1);
+                      }}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Categories</option>
@@ -386,11 +420,7 @@ const Products: React.FC = () => {
               </div>
             ) : (
               <>
-                <div className="mb-4 flex justify-between items-center">
-                  <p className="text-gray-600">
-                    Showing {filteredBooks.length} of {books.length} books
-                  </p>
-                </div>
+                
 
                 {filteredBooks.length === 0 ? (
                   <motion.div
@@ -410,170 +440,206 @@ const Products: React.FC = () => {
                     </button>
                   </motion.div>
                 ) : (
-                  <motion.div
-                    className={
-                      viewMode === "grid"
-                        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                        : "space-y-4"
-                    }
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {filteredBooks.map((book, index) => {
-                      const rating = generateRating();
-                      const reviews = generateReviews();
-                      const isWishlisted = wishlist.includes(book._id);
+                  <>
+                    <motion.div
+                      className={
+                        viewMode === "grid"
+                          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                          : "space-y-4"
+                      }
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {currentBooks.map((book, index) => {
+                        const rating = generateRating();
+                        const reviews = generateReviews();
+                        const isWishlisted = wishlist.includes(book._id);
 
-                      return (
-                        <motion.div
-                          key={book._id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3, delay: index * 0.05 }}
-                          className={
-                            viewMode === "grid"
-                              ? ""
-                              : "flex gap-6 bg-white rounded-xl shadow-lg p-6"
-                          }
-                        >
-                          {viewMode === "grid" ? (
-                            // Grid View
-                            <div className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-                              <div className="relative overflow-hidden h-80">
-                                <img
-                                  src={book.image}
-                                  alt={book.title}
-                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                                <button
-                                  onClick={() => toggleWishlist(book._id)}
-                                  className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110"
-                                >
-                                  <Heart
-                                    className={`w-5 h-5 transition-colors duration-300 ${
-                                      isWishlisted
-                                        ? "fill-red-500 text-red-500"
-                                        : "text-gray-600"
-                                    }`}
+                        return (
+                          <motion.div
+                            key={book._id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                            className={
+                              viewMode === "grid"
+                                ? ""
+                                : "flex gap-6 bg-white rounded-xl shadow-lg p-6"
+                            }
+                          >
+                            {viewMode === "grid" ? (
+                              // Grid View
+                              <div className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                                <div className="relative overflow-hidden h-80">
+                                  <img
+                                    src={book.image}
+                                    alt={book.title}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                   />
-                                </button>
-                              </div>
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                              <div className="p-6">
-                                <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1">
-                                  {book.title}
-                                </h3>
-                                <p className="text-sm text-gray-600 mb-3">
-                                  by {book.author}
-                                </p>
-
-                                <div className="flex items-center gap-2 mb-3">
-                                  <div className="flex items-center">
-                                    {[...Array(5)].map((_, i) => (
-                                      <Star
-                                        key={i}
-                                        className={`w-4 h-4 ${
-                                          i < Math.floor(Number(rating))
-                                            ? "fill-yellow-400 text-yellow-400"
-                                            : "text-gray-300"
-                                        }`}
-                                      />
-                                    ))}
-                                  </div>
-                                  <span className="text-sm text-gray-600">
-                                    ({reviews})
-                                  </span>
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                  <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                    ${book.price.toFixed(2)}
-                                  </span>
-                                  <Link
-                                    to={`/product-details/${book._id}`}
-                                    className="text-purple-600 hover:text-purple-800 font-medium text-sm"
+                                  <button
+                                    onClick={() => toggleWishlist(book._id)}
+                                    className="absolute top-4 right-4 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110"
                                   >
-                                    View Details →
-                                  </Link>
+                                    <Heart
+                                      className={`w-5 h-5 transition-colors duration-300 ${
+                                        isWishlisted
+                                          ? "fill-red-500 text-red-500"
+                                          : "text-gray-600"
+                                      }`}
+                                    />
+                                  </button>
                                 </div>
-                              </div>
-                            </div>
-                          ) : (
-                            // List View
-                            <>
-                              <img
-                                src={book.image}
-                                alt={book.title}
-                                className="w-32 h-48 object-cover rounded-lg"
-                              />
-                              <div className="flex-1">
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                                  {book.title}
-                                </h3>
-                                <p className="text-gray-600 mb-1">
-                                  by {book.author}
-                                </p>
-                                <p className="text-sm text-gray-500 mb-3">
-                                  Category: {book.category}
-                                </p>
 
-                                <div className="flex items-center gap-2 mb-3">
-                                  <div className="flex items-center">
-                                    {[...Array(5)].map((_, i) => (
-                                      <Star
-                                        key={i}
-                                        className={`w-4 h-4 ${
-                                          i < Math.floor(Number(rating))
-                                            ? "fill-yellow-400 text-yellow-400"
-                                            : "text-gray-300"
-                                        }`}
-                                      />
-                                    ))}
+                                <div className="p-6">
+                                  <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1">
+                                    {book.title}
+                                  </h3>
+                                  <p className="text-sm text-gray-600 mb-3">
+                                    by {book.author}
+                                  </p>
+
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <div className="flex items-center">
+                                      {[...Array(5)].map((_, i) => (
+                                        <Star
+                                          key={i}
+                                          className={`w-4 h-4 ${
+                                            i < Math.floor(Number(rating))
+                                              ? "fill-yellow-400 text-yellow-400"
+                                              : "text-gray-300"
+                                          }`}
+                                        />
+                                      ))}
+                                    </div>
+                                    
                                   </div>
-                                  <span className="text-sm text-gray-600">
-                                    {rating} ({reviews} reviews)
-                                  </span>
-                                </div>
 
-                                <div className="flex items-center justify-between">
-                                  <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                    ${book.price.toFixed(2)}
-                                  </span>
-                                  <div className="flex gap-3">
-                                    <button
-                                      onClick={() => toggleWishlist(book._id)}
-                                      className="p-2 border-2 border-gray-200 rounded-lg hover:border-purple-500 transition-colors"
-                                    >
-                                      <Heart
-                                        className={`w-5 h-5 ${
-                                          isWishlisted
-                                            ? "fill-red-500 text-red-500"
-                                            : "text-gray-600"
-                                        }`}
-                                      />
-                                    </button>
-                                    <button className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 flex items-center gap-2">
-                                      <ShoppingCart className="w-4 h-4" />
-                                      Add to Cart
-                                    </button>
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                                      ${book.price.toFixed(2)}
+                                    </span>
                                     <Link
                                       to={`/product-details/${book._id}`}
-                                      className="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg font-medium hover:bg-purple-50"
+                                      className="text-purple-600 hover:text-purple-800 font-medium text-sm"
                                     >
-                                      View Details
+                                      View Details →
                                     </Link>
                                   </div>
                                 </div>
                               </div>
-                            </>
-                          )}
-                        </motion.div>
-                      );
-                    })}
-                  </motion.div>
+                            ) : (
+                              // List View
+                              <>
+                                <img
+                                  src={book.image}
+                                  alt={book.title}
+                                  className="w-32 h-48 object-cover rounded-lg"
+                                />
+                                <div className="flex-1">
+                                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                                    {book.title}
+                                  </h3>
+                                  <p className="text-gray-600 mb-1">
+                                    by {book.author}
+                                  </p>
+                                  <p className="text-sm text-gray-500 mb-3">
+                                    Category: {book.category}
+                                  </p>
+
+                                  <div className="flex items-center gap-2 mb-3">
+                                    <div className="flex items-center">
+                                      {[...Array(5)].map((_, i) => (
+                                        <Star
+                                          key={i}
+                                          className={`w-4 h-4 ${
+                                            i < Math.floor(Number(rating))
+                                              ? "fill-yellow-400 text-yellow-400"
+                                              : "text-gray-300"
+                                          }`}
+                                        />
+                                      ))}
+                                    </div>
+                                    <span className="text-sm text-gray-600">
+                                      {rating} ({reviews} reviews)
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center justify-between">
+                                    <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                                      ${book.price.toFixed(2)}
+                                    </span>
+                                    <div className="flex gap-3">
+                                      <button
+                                        onClick={() => toggleWishlist(book._id)}
+                                        className="p-2 border-2 border-gray-200 rounded-lg hover:border-purple-500 transition-colors"
+                                      >
+                                        <Heart
+                                          className={`w-5 h-5 ${
+                                            isWishlisted
+                                              ? "fill-red-500 text-red-500"
+                                              : "text-gray-600"
+                                          }`}
+                                        />
+                                      </button>
+                                      <button className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 flex items-center gap-2">
+                                        <ShoppingCart className="w-4 h-4" />
+                                        Add to Cart
+                                      </button>
+                                      <Link
+                                        to={`/product-details/${book._id}`}
+                                        className="px-4 py-2 border-2 border-purple-600 text-purple-600 rounded-lg font-medium hover:bg-purple-50"
+                                      >
+                                        View Details
+                                      </Link>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </motion.div>
+                        );
+                      })}
+                    </motion.div>
+
+                    {/* Pagination Controls */}
+                    <div className="mt-8 flex justify-center items-center gap-3 text-gray-700">
+                      <button
+                        onClick={() => goToPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 disabled:opacity-50 disabled:cursor-not-allowed`}
+                      >
+                        Previous
+                      </button>
+
+                      {/* Page Numbers */}
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                        (pageNum) => (
+                          <button
+                            key={pageNum}
+                            onClick={() => goToPage(pageNum)}
+                            className={`px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 ${
+                              pageNum === currentPage
+                                ? "bg-purple-600 text-white border-purple-600"
+                                : ""
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        )
+                      )}
+
+                      <button
+                        onClick={() => goToPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className={`px-4 py-2 rounded-md border border-gray-300 hover:bg-purple-100 disabled:opacity-50 disabled:cursor-not-allowed`}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </>
                 )}
               </>
             )}

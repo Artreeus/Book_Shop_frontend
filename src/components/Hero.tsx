@@ -66,9 +66,9 @@ const Hero = () => {
 
   // Stats for bottom section
   const stats = [
-    { label: "Happy Readers", value: 50000, icon: Users },
-    { label: "Books Available", value: 10000, icon: BookOpen },
-    { label: "Five Star Reviews", value: 4800, icon: Star },
+    { label: "Happy Readers", value: 10, icon: Users },
+    { label: "Books Available", value: 9, icon: BookOpen },
+    { label: "Five Star Reviews", value: 6, icon: Star },
   ];
 
   // Auto-play slider
@@ -263,7 +263,7 @@ const Hero = () => {
                     />
                   ))}
                 </div>
-                <p className="text-sm text-gray-600 mt-2">50k+ Happy Readers</p>
+               
               </div>
               <div className="flex items-center gap-1">
                 {[...Array(5)].map((_, i) => (
